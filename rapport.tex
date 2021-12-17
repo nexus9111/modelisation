@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{listings, xcolor, graphicx}
+\usepackage{amsmath}
+\graphicspath{ {./} }
+
+\lstset{
+    tabsize = 4, %% set tab space width
+    showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
+    numbers = left, %% display line numbers on the left
+    commentstyle = \color{green}, %% set comment color
+    keywordstyle = \color{blue}, %% set keyword color
+    stringstyle = \color{red}, %% set string color
+    rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+    basicstyle = \small \ttfamily , %% set listing font and size
+    breaklines = true, %% enable line breaking
+    numberstyle = \tiny,
+}
+
+\title{Modélisation de la propagation des variants du COVID}
+\author{}
+\date{Decembre 2021}
+
+\begin{document}
+
+\maketitle
+
+\section{Le modèle de base}
+
+Les variables de base pour seulement 1 virus : 
+\begin{align}
+    S(t)= \text{\% de personnes saines dans la population au temps t} \\
+    I(t)= \text{\% de personnes contaminées dans la population au temps t} \\
+    R(t)= \text{\% de personnes en rémission dans la population au temps t} \\
+\end{align}
+
+Mise en équation et système : 
+\begin{align}
+    \dot{S}(t)= -\alpha S(t)I(t) \\
+    \dot{I}(t)= \alpha S(t)I(t)-\beta I(t) \\
+    \dot{R}(t)= \beta I(t) + \beta I(t)
+\end{align}
+
+\section{Les démonstrations du prof}
+
+Exemple avec 2 variants.
+
+Les variables : 
+\begin{align}
+    S_1(t)= \text{\% de non infecté par le variant 1.} \\
+    S_2(t)= \text{\% de non infecté par le variant 2.} \\
+    I_1(t)= \text{\% d'infecté au variant 1.} \\
+    I_2(t)= \text{\% d'infecté au variant 2.} \\
+    R_1(t)= \text{\% de remis au variant 1.} \\
+    R_2(t)= \text{\% de remis au variant 2.} \\
+\end{align}
+
+Le système d'équation pour le premier variant : 
+\begin{align}
+    \dot{S_1}(t)= -\alpha_1 S_1(t)I_1(t) \\
+    \dot{I_1}(t)= \alpha_1 S_1(t)I_1(t)-\beta_1 I_1(t) \\
+    \dot{R_1}(t)= \beta_1 I_1(t)
+\end{align}
+On obtient le même avec le second variant. \\
+Cependant le système est trop simple, il n'y a pas d'interaction entre les virus. \\
+On fait un nouveau système qui permet une interaction entre les variants :
+\begin{align}
+    \dot{S}(t)= -\alpha_1 S(t)I_1(t) - \alpha_2 S(t)I_2(t) \\
+    \dot{I_1}(t)= \alpha_1 S(t)I_1(t)-\beta_1 I_1(t) \\
+    \dot{I_2}(t)= \alpha_2 S(t)I_2(t)-\beta_2 I_2(t) \\
+    \dot{R}(t)= \beta_1 I_1(t) + \beta_2 I_2(t)
+\end{align}
+On part du principe que l'on ne peut être contaminé que par un variant. \\
+On veut maintenant modéliser les mutations.\\
+Le \% de chance de mutation du variant 1 sur l'intervalle de temps T est défini par :
+\begin{align}
+    mut = I_1(t)*(1-e^{\gamma T})\text{ avec }\gamma > \text{0}
+\end{align}
+
+
+
+\end{document}
