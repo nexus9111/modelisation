@@ -60,3 +60,5 @@ class Variant {
     return this.variant + " " + this.I + " " + this.Iold + " " + this.Alpha + " " + this.Beta + " " + this.Array;
   }
 }
+
+export default Variant;

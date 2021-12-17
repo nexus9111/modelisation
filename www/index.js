@@ -1,28 +1,28 @@
-import Variant from './variant'
+import Variant from './Variant.js'
 
-let S = 0.2
+let S = 0.6
 let R = 0
 
 let listS = []
 let listR = []
 
-const variant1 = new Variant(1, 0.8, 0.01, 0.01)
-const variant2 = new Variant(2, 0.7, 0.01, 0.01)
+const variant1 = new Variant(1, 0.2, 0.01, 0.001)
+const variant2 = new Variant(2, 0.2, 0.01, 0.01)
 
 const variants = [variant1, variant2]
 
-let gamma = 3
+let gamma = 0.01
 let percentToCreateVariantWithLargeDifferentParametres = 1
 
 let t = 0.0
 let T = 365
-let deltaT = 0.01
+let deltaT = 1
 
 let index = 0
 
 function probaMutation(variant, t) {
-  const tsec = t / 24 / 60 / 60
-  return (variant.getI() * (1 - Math.exp(-gamma * tsec)))
+  // const tsec = t / 24 / 60 / 60
+  return (variant.getI() * (1 - Math.exp(-gamma * t)))
 }
 
 function genRand(min, max, decimalPlaces) {  
@@ -38,7 +38,7 @@ while (t < T) {
   let R_changer = 0
 
   variants.forEach(variant => {
-      variant.setIold(variant.getI())) 
+      variant.setIold(variant.getI())
 
       S_changer += - variant.getAlpha() * S_old * variant.getIold()
       R_changer += variant.getBeta() * variant.getIold()
@@ -55,8 +55,9 @@ while (t < T) {
   listS.push(S)
   listR.push(R)
 
+  let tempV = []
   variants.forEach(variant => {
-    if (genRand(0, 1, 10) > probaMutation(variant, t)) {
+    if (genRand(0, 1, 10) < probaMutation(variant, deltaT)) {
         const randomPercent = genRand(0, 100, 10)
         let newI;
         let newAlpha;
@@ -72,30 +73,56 @@ while (t < T) {
         }
 
         const newVariant = new Variant(variants.length, newI, newAlpha, newBeta)
-        variants.push(newVariant)
+
+        for (let i = 0; i < T / (t+1); i++) {
+          newVariant.addToArray(0)
+        }
     }
-    
   })
+  tempV.forEach(variant => variants.push(variant))
+
   t = t + deltaT
 }
 
-const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-];
+function generateRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+let labels = new Array(T);
+for (let i = 0; i<T; ++i){
+  labels[i] = i;
+}
+
+
 
 const data = {
   labels: labels,
-  datasets: [{
-    label: 'My First dataset',
-    backgroundColor: 'rgb(255, 99, 132)',
-    borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45],
-  }]
+  datasets: [
+    {
+      label: 'Sain',
+      data: listS,
+      borderColor: generateRandomColor(),
+    },
+    {
+      label: 'Rémission',
+      data: listR,
+      borderColor: generateRandomColor(),
+    },
+    ...variants.map((variant) => {
+      return {
+        label: 'Variant ' + variant.getVariant(),
+        data: variant.getArray(),
+        borderColor: generateRandomColor(),
+        fill: false,
+      }
+    })
+  ]
+    
 };
 
 const config = {
