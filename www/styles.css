@@ -1,0 +1,23 @@
+.chartWrapper {
+  width: 80%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.inputWrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.inputWrapper > input {
+  margin-bottom: 1rem;
+}
+
+#healty {
+  width: 20rem;
+  height: auto;
+}

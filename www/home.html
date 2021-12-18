@@ -8,12 +8,23 @@
   <meta name="description" content="Modélisation de la propagation d'un virus">
   <meta name="" content="">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-  <div>
+  <div class="chartWrapper">
     <canvas id="myChart"></canvas>
+    <div class="inputWrapper">
+      <label>Taux de personnes saines</label>
+      <input type="number" id="healty" name="healty" min="0" max="1" step="0.1" />
+      <label>Gamma pour la probabilité de mutation du virus</label>
+      <input type="number" id="gamma" name="gamma" min="0" max="1" step="0.01" />
+      <label>Probabilité de créer un nouveau variant avec des paramètres très éloignées de son parent.</label>
+      <input type="number" id="differentVariantPercent" name="differentVariantPercent" min="0" max="100" step="1" />
+      <label>Durée de la simulation en jours</label>
+      <input type="number" id="time" name="time" min="0" step="1" />
+      <button id="start" onClick="lauch()">Relancer la simulation</button>
+    </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js" integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="index.js" type="module"></script>

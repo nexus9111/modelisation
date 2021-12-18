@@ -1,7 +1,27 @@
 import Variant from './Variant.js'
 
+// Elements
+let healtyInput = document.getElementById('healty')
+let gammaInput = document.getElementById('gamma')
+let differentVariantPercentInput = document.getElementById('differentVariantPercent')
+let timeInput = document.getElementById('time')
+
+
+// Variables
 let S = 0.6
 let R = 0
+let gamma = 0.01
+let percentToCreateVariantWithLargeDifferentParametres = 1
+let t = 0.0
+let T = 365
+let deltaT = 1
+
+// Initialization in html
+healtyInput.value = S
+gammaInput.value = gamma
+differentVariantPercentInput.value = percentToCreateVariantWithLargeDifferentParametres
+timeInput.value = T
+
 
 let listS = []
 let listR = []
@@ -11,14 +31,7 @@ const variant2 = new Variant(2, 0.2, 0.01, 0.01)
 
 const variants = [variant1, variant2]
 
-let gamma = 0.01
-let percentToCreateVariantWithLargeDifferentParametres = 1
 
-let t = 0.0
-let T = 365
-let deltaT = 1
-
-let index = 0
 
 function probaMutation(variant, t) {
   // const tsec = t / 24 / 60 / 60
@@ -98,8 +111,6 @@ for (let i = 0; i<T; ++i){
   labels[i] = i;
 }
 
-
-
 const data = {
   labels: labels,
   datasets: [
@@ -122,7 +133,6 @@ const data = {
       }
     })
   ]
-    
 };
 
 const config = {
