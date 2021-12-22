@@ -40,7 +40,7 @@ while (t<T):
         S_changer += - variants[i].getAlpha() * S_old * variants[i].getIold()
         R_changer += variants[i].getBeta() * variants[i].getIold()
 
-        variants[i].setI(variants[i].getIold() + (deltaT * variants[i].getAlpha() * S *  variants[i].getIold()) - (deltaT * variants[i].getBeta() * variants[i].getIold()))
+        variants[i].setI(variants[i].getIold() + (deltaT * variants[i].getAlpha() * S * variants[i].getIold()) - (deltaT * variants[i].getBeta() * variants[i].getIold()))
 
         variants[i].addToArray(variants[i].getI())
 
