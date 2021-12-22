@@ -93,7 +93,17 @@ function generateChart() {
   const config = {
     type: 'line',
     data: generatePlotData(),
-    options: {}
+    options: {
+      scales: {
+      yAxes: [{
+          display: true,
+          ticks: {
+              suggestedMin: 0,
+              suggestedMax: 1,
+          }
+        }]
+      }
+    }
   };
 
   myChart.destroy()
