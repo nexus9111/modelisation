@@ -106,6 +106,7 @@ function generateChart() {
 
 function lauchSimulation() {
   variants = [variant1, variant2];
+  t = 0.0;
   while (t < T) {
     let S_old = S
     let R_old = R
@@ -160,15 +161,8 @@ function lauchSimulation() {
     t = t + deltaT
   }
   generateChart()
-
 }
 
 lauchSimulation()
 
-
 document.getElementById("start").onclick = lauchSimulation;
-let button = document.getElementById("start");
-if (button.addEventListener)
-  button.addEventListener("click", lauchSimulation, false);
-else if (button.attachEvent)
-  button.attachEvent('onclick', lauchSimulation);

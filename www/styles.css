@@ -17,7 +17,29 @@
   margin-bottom: 1rem;
 }
 
-#healty {
-  width: 20rem;
-  height: auto;
+label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+input {
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  width: 15rem;
+}
+
+button {
+  width: max-content;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: coral;
+  color: white;
 }
