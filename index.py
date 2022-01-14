@@ -4,12 +4,12 @@ import random
 from math import exp
 from Variant import Variant
 
-S = 0.6
+S = 0.97
 R = 0
 listS = []
 listR = []
-variant1 = Variant(1, 0.2, 0.01, 0.001)
-variant2 = Variant(2, 0.2, 0.01, 0.01)
+variant1 = Variant(1, 0.01, 0.01, 0.001)
+variant2 = Variant(2, 0.02, 0.01, 0.005)
 variants = [
     variant1,
     variant2
@@ -17,9 +17,10 @@ variants = [
 
 gamma = 0.01
 percentToCreateVariantWithLargeDifferentParametres = 1
+percentOfPop = 0.7
 
 t = 0
-T = 365
+T = 2000
 deltaT = 1
 
 index = 0
@@ -29,7 +30,6 @@ def probaMutation(variant : Variant, t : float) -> float:
     return (variant.getI() * (1 - exp(-gamma * t)))
 
 while (t<T):
-    print(str(t)+" "+str(len(variants)));
     S_old = S
     R_old = R
     S_changer = 0
@@ -52,20 +52,19 @@ while (t<T):
 
     tempLen = []
     for i in range(len(variants)):
-        if random.uniform(0,1) < probaMutation(variants[i], deltaT):
+        if random.uniform(0, 1) < probaMutation(variants[i], deltaT):
             
             randomPercent = random.uniform(0,100)
             if (randomPercent > percentToCreateVariantWithLargeDifferentParametres): 
-                new_I = random.uniform(variants[i].getI() * 0.1, variants[i].getI() * 1.9)
                 new_alpha = random.uniform(variants[i].getAlpha() * 0.1, variants[i].getAlpha() * 1.9)
                 new_beta = random.uniform(variants[i].getBeta() * 0.1, variants[i].getBeta() * 1.9)
             else:
-                new_I = random.uniform(variants[i].getI() * 0.9, variants[i].getI() * 1.1)
-                new_alpha = random.uniform(variants[i].getAlpha() * 0.9, variants[i].getAlpha() * 1.1)
+                new_alpha = random.uniform(variants[i].getAlpha() * 1.2, variants[i].getAlpha() * 1.4)
                 new_beta = random.uniform(variants[i].getBeta() * 0.9, variants[i].getBeta() * 1.1)
 
+            new_I = random.uniform(0, variants[i].getI() * percentOfPop)
             newV = Variant(variants[-1].getVariant() + 1, new_I, new_alpha, new_beta) 
-
+            variants[i].setI(variants[i].getI() - new_I)
             for i in range(int(t)):
                 newV.addToArray(None)
             
@@ -75,6 +74,7 @@ while (t<T):
         variants.append(i)
     
     t = t + deltaT
+
 
     # index += 1
 
@@ -87,8 +87,13 @@ plt.plot(listR, "b", label="Remission")
 plt.plot(listS, "r", label="Sain")
 for i in range(len(variants)):
     plt.plot(variants[i].getArray(), label=str(variants[i].getVariant()))
+
+ax = plt.gca()
+ax.set_ylim([0, 1])
 plt.legend()
 plt.show()
+
+
 
 """
 COVID
