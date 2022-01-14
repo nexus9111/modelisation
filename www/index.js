@@ -14,6 +14,9 @@ let percentToCreateVariantWithLargeDifferentParametres = 1;
 let t = 0.0;
 let T = 365;
 let deltaT = 1;
+let listS = [];
+let listR = [];
+let variants = [];
 
 // Initialization in html
 healtyInput.value = S;
@@ -27,12 +30,17 @@ gammaInput.addEventListener('input', () => gamma = gammaInput.value);
 differentVariantPercentInput.addEventListener('input', () => percentToCreateVariantWithLargeDifferentParametres = differentVariantPercentInput.value);
 timeInput.addEventListener('change', () => T = timeInput.value);
 
-let listS = []
-let listR = []
 
-const variant1 = new Variant(1, 0.2, 0.01, 0.001);
-const variant2 = new Variant(2, 0.2, 0.01, 0.01);
-let variants = []
+function reinitialisation() {
+  listS = []
+  listR = []
+  variants = [new Variant(1, 0.2, 0.01, 0.01), new Variant(2, 0.2, 0.01, 0.001)];
+  t = 0.0;
+  S = healtyInput.value;
+  gamma = gammaInput.value;
+  percentToCreateVariantWithLargeDifferentParametres = differentVariantPercentInput.value;
+  T = timeInput.value;
+}
 
 function probaMutation(variant, t) {
   // const tsec = t / 24 / 60 / 60
@@ -56,7 +64,7 @@ function generateRandomColor() {
 
 function generatePlotData() {
   let labels = new Array(T);
-  for (let i = 0; i < T; ++i){
+  for (let i = 0; i < T; ++i) {
     labels[i] = i;
   }
 
@@ -95,15 +103,12 @@ function generateChart() {
     data: generatePlotData(),
     options: {
       scales: {
-      yAxes: [{
-          display: true,
-          ticks: {
+          y: {
               suggestedMin: 0,
-              suggestedMax: 1,
+              suggestedMax: 1
           }
-        }]
       }
-    }
+  }
   };
 
   myChart.destroy()
@@ -114,9 +119,12 @@ function generateChart() {
   );
 }
 
+
 function lauchSimulation() {
-  variants = [variant1, variant2];
-  t = 0.0;
+  console.log(variants)
+  reinitialisation()
+  console.log(variants)
+
   while (t < T) {
     let S_old = S
     let R_old = R
@@ -126,14 +134,13 @@ function lauchSimulation() {
     variants.forEach(variant => {
         variant.setIold(variant.getI())
   
-        S_changer += - variant.getAlpha() * S_old * variant.getIold()
+        S_changer += -variant.getAlpha() * S_old * variant.getIold()
         R_changer += variant.getBeta() * variant.getIold()
   
-        variant.setI(variant.getIold() + (deltaT * variant.getAlpha() * S *  variant.getIold()) - (deltaT * variant.getBeta() * variant.getIold()))
+        variant.setI(variant.getIold() + (deltaT * variant.getAlpha() * S * variant.getIold()) - (deltaT * variant.getBeta() * variant.getIold()))
   
         variant.addToArray(variant.getI())
     })
-        
   
     S = S_old + deltaT * S_changer
     R = R_old + deltaT * R_changer
@@ -173,6 +180,7 @@ function lauchSimulation() {
   generateChart()
 }
 
+// Start
 lauchSimulation()
 
 document.getElementById("start").onclick = lauchSimulation;

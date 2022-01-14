@@ -64,10 +64,10 @@ while (t<T):
                 new_alpha = random.uniform(variants[i].getAlpha() * 0.9, variants[i].getAlpha() * 1.1)
                 new_beta = random.uniform(variants[i].getBeta() * 0.9, variants[i].getBeta() * 1.1)
 
-            newV =  Variant(variants[-1].getVariant() + 1, new_I, new_alpha, new_beta) 
+            newV = Variant(variants[-1].getVariant() + 1, new_I, new_alpha, new_beta) 
 
-            for i in range(int(T/(t+1))):
-                newV.addToArray(0)
+            for i in range(int(t)):
+                newV.addToArray(None)
             
             tempLen.append(newV)
     
