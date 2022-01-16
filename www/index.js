@@ -1,5 +1,3 @@
-import Variant from './Variant.js'
-
 let data = {
   S: 0.97,
   R: 0,
@@ -29,29 +27,32 @@ let data = {
   t: 0,
   T: 2000,
   deltaT: 1
-} 
+}
 
 // Elements
 let healtyInput = document.getElementById('healty');
+let remissionInput = document.getElementById('remission');
 let gammaInput = document.getElementById('gamma');
 let differentVariantPercentInput = document.getElementById('differentVariantPercent');
 let timeInput = document.getElementById('time');
 
 // Initialization in html
-healtyInput.value = S;
-gammaInput.value = gamma;
-differentVariantPercentInput.value = percentToCreateVariantWithLargeDifferentParametres;
-timeInput.value = T;
+healtyInput.value = data.S;
+remissionInput.value = data.R;
+gammaInput.value = data.gamma;
+differentVariantPercentInput.value = data.percentToCreateVariantWithLargeDifferentParametres;
+timeInput.value = data.T;
 
 // Event listener
-healtyInput.addEventListener('input', () => input.S = healtyInput.value);
-gammaInput.addEventListener('input', () => input.gamma = gammaInput.value);
-differentVariantPercentInput.addEventListener('input', () => input.percentToCreateVariantWithLargeDifferentParametres = differentVariantPercentInput.value);
+healtyInput.addEventListener('change', () => input.S = healtyInput.value);
+remissionInput.addEventListener('change', () => input.R = remissionInput.value);
+gammaInput.addEventListener('change', () => input.gamma = gammaInput.value);
+differentVariantPercentInput.addEventListener('change', () => input.percentToCreateVariantWithLargeDifferentParametres = differentVariantPercentInput.value);
 timeInput.addEventListener('change', () => input.T = timeInput.value);
 
 
-function probaMutation(variant, t) {
-  return (variant.getI() * (1 - Math.exp(-gamma * t)));
+function probaMutation(variant, t, gamma) {
+  return (variant.I * (1 - Math.exp(-gamma * t)));
 }
 
 function genRand(min, max, decimalPlaces) {  
@@ -69,7 +70,7 @@ function generateRandomColor() {
   return color;
 }
 
-function generatePlotData() {
+function generatePlotData({ T, evolutionS, evolutionR, variants }) {
   let labels = new Array(T);
   for (let i = 0; i < T; ++i) {
     labels[i] = i;
@@ -80,18 +81,18 @@ function generatePlotData() {
     datasets: [
       {
         label: 'Sain',
-        data: listS,
+        data: evolutionS,
         borderColor: generateRandomColor(),
       },
       {
         label: 'Rémission',
-        data: listR,
+        data: evolutionR,
         borderColor: generateRandomColor(),
       },
       ...variants.map((variant) => {
         return {
-          label: 'Variant ' + variant.getVariant(),
-          data: variant.getArray(),
+          label: 'Variant ' + variant.variant,
+          data: variant.Array,
           borderColor: generateRandomColor(),
           fill: false,
         }
@@ -104,10 +105,10 @@ function generatePlotData() {
 
 let myChart = new Chart(document.getElementById('myChart'), {});
 
-function generateChart() {
+function generateChart(data) {
   const config = {
     type: 'line',
-    data: generatePlotData(),
+    data: generatePlotData(data),
     options: {
       scales: {
           y: {
@@ -127,12 +128,105 @@ function generateChart() {
 }
 
 
-function lauchSimulation() {
+function lauchSimulation(data) {
+  let { S, R, evolutionS, evolutionR, variants, gamma, percentToCreateVariantWithLargeDifferentParametres, percentOfPop, t, T, deltaT } = data
 
-  generateChart()
+  while(t < T) {
+    let S_old = S
+    let R_old = R
+    let S_changer = 0
+    let R_changer = 0
+
+    variants.forEach((variant) => {
+      variant.Iold = variant.I
+      S_changer += - variant.Alpha * S_old * variant.Iold
+      R_changer += variant.Beta * variant.Iold
+      variant.I = variant.Iold + (deltaT * variant.Alpha * S * variant.Iold) - (deltaT * variant.Beta * variant.Iold)
+      variant.Array.push(variant.I)
+    })
+
+    S = S_old + deltaT * S_changer
+    R = R_old + deltaT * R_changer
+
+    evolutionS.push(S)
+    evolutionR.push(R)
+
+    let possibleNewVariants = []
+    variants.forEach((variant) => {
+      if (genRand(0, 1, 10) < probaMutation(variant, deltaT, gamma)) {
+        const randomPercent = genRand(0, 100, 10)
+        let newI;
+        let newAlpha;
+        let newBeta;
+        if (randomPercent > percentToCreateVariantWithLargeDifferentParametres) {
+          newAlpha = genRand(variant.Alpha * 0.1, variant.Alpha * 1.9, 10)
+          newBeta = genRand(variant.Beta * 0.1, variant.Beta * 1.9, 10)
+        } else {
+          newAlpha = genRand(variant.Alpha * 1.2, variant.Alpha * 1.4, 10)
+          newBeta = genRand(variant.Beta * 0.9, variant.Beta * 1.1, 10)
+        }
+        newI = genRand(0, variant.I * percentOfPop, 10)
+
+        variant.I -= newI
+
+        for (let i = 0; i < t; i++) {
+          variant.Array.push(null)
+        }
+        possibleNewVariants.push({ variant: variants.length + 1, I: newI, Iold: 0, Alpha: newAlpha, Beta: newBeta, Array: [] })
+      }
+    })
+    possibleNewVariants.forEach(variant => variants.push(variant))
+  
+    t = t + deltaT
+  }
+
+  generateChart({ T, evolutionS, evolutionR, variants })
 }
 
-// Start
+function reinitialize(data) {
+  let newData = {
+    S: parseFloat(healtyInput.value),
+    R: parseFloat(remissionInput.value),
+    gamma: parseFloat(gammaInput.value),
+    percentToCreateVariantWithLargeDifferentParametres: parseFloat(differentVariantPercentInput.value),
+    percentOfPop: parseFloat(data.percentOfPop),
+    T: parseFloat(timeInput.value),
+    evolutionS: new Array(),
+    evolutionR: new Array(),
+    t: 0,
+    deltaT: 1,
+    variants: new Array(),
+  }
+
+  newData = {
+    ...newData, 
+    variants: [
+      {
+        variant: 1,
+        I: 0.01,
+        Iold: 0,
+        Alpha: 0.01,
+        Beta: 0.001,
+        Array: new Array(),
+      },
+      {
+        variant: 2,
+        I: 0.02,
+        Iold: 0,
+        Alpha: 0.01,
+        Beta: 0.005,
+        Array: new Array(),
+      }
+    ],
+  }
+
+  return newData
+}
+
 lauchSimulation(data)
 
-document.getElementById("start").onclick = lauchSimulation;
+document.getElementById("start").addEventListener("click", function() {
+  let newestData = reinitialize(data)
+  console.log(newestData)
+  lauchSimulation(newestData)
+});
