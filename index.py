@@ -29,7 +29,7 @@ def probaMutation(variant : Variant, t : float) -> float:
     #tsec = t / 24 / 60 / 60
     return (variant.getI() * (1 - exp(-gamma * t)))
 
-while (t<T):
+while (t < T):
     S_old = S
     R_old = R
     S_changer = 0
