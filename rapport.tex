@@ -4,34 +4,17 @@
 \usepackage[french]{babel}
 \usepackage{listings, xcolor, graphicx}
 \usepackage{amsmath}
+\usepackage{textgreek}
+\usepackage{enumitem}
 \graphicspath{ {./} }
 
-\lstset{frame=tb,
-   language=java,
-   aboveskip=3mm,
-   belowskip=3mm,
-   showstringspaces=false,
-   columns=flexible,
-   basicstyle={\small\ttfamily},
-   numbers=none,
-   numberstyle=\tiny\color{gray},
-   keywordstyle=\color{blue},
-   commentstyle=\color{dkgreen},
-   stringstyle=\color{mauve},
-   breaklines=true,
-   breakatwhitespace=true
-   tabsize=3
-}
-
-
 \title{Modélisation de la propagation des variants du COVID}
-\author{Bouzakri Wassim, Coupet Joss, Marchetti Marie-Eden, Vasseur Pierre-Adrien}
+\author{BOUZAKRI Wassim \\COUPET Joss \\MARCHETTI Marie-Eden \\VASSEUR Pierre-Adrien}
 \date{Février 2022}
 
 \begin{document}
 
 \maketitle
-
 
 \section{Résumé}
 
@@ -39,44 +22,52 @@ Dans ce rapport, ...
 
 \section{Introduction}
 
-Dans ce rapport, on va étudier la propagation de la Covid-19 par le biais des variants.\\
+Dans ce rapport, on va étudier la propagation de la Covid-19 par le biais des variants.
 On se demande alors si leur circulation et mutation influencent le comportement de l'épidémie, en plus de considérer leur interaction entre eux.\\
 
+\noindent
+Concernant les recherches existantes, on a découvert peu d'articles présentant des simulations de propagation de la Covid-19 par le biais des variants.
+Les quelques articles existants se concentraient surtout des propriétés biologiques du virus influencant la simulation de la mutation et la propagation.
+Par exemple, la taille du génome du virus parent ou les symptômes. (Marquioni \& de Aguiar, 2021), ce sont des analyses intéressantes mais sans doute trop complexe sans avoir suivi la formation adéquate.\\
 
+\noindent
+Une approche différente et plus simple a été choisie afin de permettre la compréhension par un maximum de lecteurs. Elle sere détaillée tout au long de cet article.\\
 
-Problématique :
-- La circulation et la mutation de variants influencent-elles le comportement de l'épidémie de la Covid-19 ?\\
-- Comment les variants intéragissent-ils entre eux ?
-
-Commentaire sur l'existant :\\
-Même chose existe et déjà fait?
-Justifier ce que l'on a produit en se référençant à ce qui existe?
-Citer les sources
-Si non spécialiste et veut savoir comment ça marche, n'importe qui doit pouvoir lire, comprendre, reproduire le rapport
-- Comment on peut d'une manière simple modéliser la propagation de la Covid-19, manière d'apparenter la chose
+\noindent
+Tout d'abord, on présentera la modélisation de départ de la propagation de la Covid-19 initialisée avec un seul variant. \par
+Ensuite, on se penchera sur la modélisation plus complexe initialisée avec deux variants, sur lequel on concentra notre étude.\par
+Puis, on réalisera plusieurs simulations différentes dans l'objectif d'interpréter le comportement de ce modèle grâce aux résultats.\par
+Enfin, on concluera notre étude.\\
 
 \section{Modélisation de départ}
 
-Les variables de base pour seulement 1 virus : 
+La modélisation de départ est très basique et représente l'évolution d'un seul variant en prenant en compte sa virulence et sa force de contamination.\\
+\noindent
+Les variables de base pour seulement 1 virus sont les suivantes : 
 \begin{align}
     S(t)= \text{\% de personnes saines dans la population au temps t} \\
     I(t)= \text{\% de personnes contaminées dans la population au temps t} \\
     R(t)= \text{\% de personnes en rémission dans la population au temps t} \\
 \end{align}
-
-Mise en équation et système : 
+\noindent
+\textalpha \space représente la force de contagion du virus. \\
+\textbeta \space représente la virulence du virus. \\
+\noindent
+La simulation discrétisée par le temps est représentée dans le système d'équation suivante : 
 \begin{align}
     \dot{S}(t)= -\alpha S(t)I(t) \\
     \dot{I}(t)= \alpha S(t)I(t)-\beta I(t) \\
     \dot{R}(t)= \beta I(t) + \beta I(t)
 \end{align}
+\noindent
+Cette mise en équation permet de simuler facilement la propagation de la Covid-19 au sein d'une population saine.\\
 
 \section{Modélisation avancée}
 
-
-Exemple avec 2 variants.
-
-Les variables : 
+Afin de modéliser un modèle à X variants, un nouveau système d'équation est nécessaire.\\ 
+Pour débuter, on a définit un nouveau modèle avec 2 variants qui pourra être modifié pour permettre de simuler X variants.\\
+\noindent
+Les variables de notre nouveau modèle sont les mêmes que précédemment, c'est-à-dire :
 \begin{align}
     S_1(t)= \text{\% de non infecté par le variant 1.} \\
     S_2(t)= \text{\% de non infecté par le variant 2.} \\
@@ -85,49 +76,73 @@ Les variables :
     R_1(t)= \text{\% de remis au variant 1.} \\
     R_2(t)= \text{\% de remis au variant 2.} \\
 \end{align}
-
-Le système d'équation pour le premier variant : 
+\noindent
+On obtient donc 2 systèmes d'équations différents. \\
+\noindent
+Le premier système d'équation est celui qui permet de simuler l'évolution du premier variant.\\
 \begin{align}
     \dot{S_1}(t)= -\alpha_1 S_1(t)I_1(t) \\
     \dot{I_1}(t)= \alpha_1 S_1(t)I_1(t)-\beta_1 I_1(t) \\
     \dot{R_1}(t)= \beta_1 I_1(t)
 \end{align}
-On obtient le même avec le second variant. \\
+On obtient le même pour le second variant. \\
 Cependant le système est trop simple, il n'y a pas d'interaction entre les virus. \\
-On fait un nouveau système qui permet une interaction entre les variants :
+On fait donc un nouveau système qui permet une interaction entre les variants et qui sera adaptable à X variants à l'aide de boucle en programmation :
 \begin{align}
     \dot{S}(t)= -\alpha_1 S(t)I_1(t) - \alpha_2 S(t)I_2(t) \\
     \dot{I_1}(t)= \alpha_1 S(t)I_1(t)-\beta_1 I_1(t) \\
     \dot{I_2}(t)= \alpha_2 S(t)I_2(t)-\beta_2 I_2(t) \\
     \dot{R}(t)= \beta_1 I_1(t) + \beta_2 I_2(t)
 \end{align}
-On part du principe que l'on ne peut être contaminé que par un variant. \\
+\noindent
+Lors de la création de ce modèle, on a définit la règle suivante : \\
+\begin{enumerate}
+    \item On part du principe que l'on ne peut être contaminé par un seul variant uniquement. \\
+\end{enumerate}
+
+\noindent
 On veut maintenant modéliser les mutations.\\
 Le \% de chance de mutation du variant 1 sur l'intervalle de temps T est défini par :
 \begin{align}
     mut = I_1(t)*(1-e^{\gamma T})\text{ avec }\gamma > \text{0}
 \end{align}
+\noindent
+Si une mutation doit être réalisé alors \\
+\noindent
+T est un nombre aléatoire tel que 0 < T < 100 \\
+t est la probabilité que les propriétés d'un variant soient fortement différentes des propriétés du parent.\\
+Si T > t \\
+Alors F(T) = 
+\begin{align}
+    new_\alpha = x, \alpha_{variant} \times 1.2 < x < \alpha_{variant} \times 1.4 \\
+    new_\beta = x, \beta_{variant} \times 0.9 < x < \beta_{variant} \times 1.1
+\end{align}
+\noindent
+Sinon F(T) = \\
+\begin{align}
+    new_\alpha= x, \alpha_{variant} \times 0.1 < x < \alpha_{variant} \times 1.9 \\
+    new_\beta= x, \beta_{variant} \times 0.1 < x < \beta_{variant} \times 1.9
+\end{align}
 
-\section{Modèle de l'étude}
 
-\section{Simulation numérique}
+\section{Simulations numériques}
+
 
 \section{Interprétation des résultats}
 
+Sur un temps t défini, résultats :\\
+- apparition de nouveaux variants par mutations, nombre final de variants\\
+- impact sur les personnes saines, en rémission\\
+- mutation qui prend le dessus sur son variant père (extaire caractéristiques)\\
+
 \section{Conclusion}
 
-reprendre la problématique, réponse
-améliorations? perspectives?
+reprendre la problématique, réponse\\
+améliorations? perspectives?\\
 
 \section{Référence}
 
-Modeling neutral viral mutations in the spread of SARS-CoV-2 epidemics -> 
-https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0255438
-
-Modeling neutral viral mutations in the spread ofSARS-CoV-2 epidemics ->
-https://figshare.com/articles/journal_contribution/Simulation_parameters_analytical_calculations_real_genetic_evolution_algorithm_and_Chinese_epidemic_data_corrections_/15076462
-
-
+Marquioni, V., & de Aguiar, M. (2021). Modeling neutral viral mutations in the spread of SARS-CoV-2 epidemics. PLOS ONE, 16(7), e0255438. doi: 10.1371/journal.pone.0255438
 
 
 \end{document}
