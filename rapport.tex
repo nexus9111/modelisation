@@ -26,13 +26,36 @@
 
 \title{Modélisation de la propagation des variants du COVID}
 \author{Bouzakri Wassim, Coupet Joss, Marchetti Marie-Eden, Vasseur Pierre-Adrien}
-\date{Decembre 2021}
+\date{Février 2022}
 
 \begin{document}
 
 \maketitle
 
-\section{Le modèle de base}
+
+\section{Résumé}
+
+Dans ce rapport, ...
+
+\section{Introduction}
+
+Dans ce rapport, on va étudier la propagation de la Covid-19 par le biais des variants.\\
+On se demande alors si leur circulation et mutation influencent le comportement de l'épidémie, en plus de considérer leur interaction entre eux.\\
+
+
+
+Problématique :
+- La circulation et la mutation de variants influencent-elles le comportement de l'épidémie de la Covid-19 ?\\
+- Comment les variants intéragissent-ils entre eux ?
+
+Commentaire sur l'existant :\\
+Même chose existe et déjà fait?
+Justifier ce que l'on a produit en se référençant à ce qui existe?
+Citer les sources
+Si non spécialiste et veut savoir comment ça marche, n'importe qui doit pouvoir lire, comprendre, reproduire le rapport
+- Comment on peut d'une manière simple modéliser la propagation de la Covid-19, manière d'apparenter la chose
+
+\section{Modélisation de départ}
 
 Les variables de base pour seulement 1 virus : 
 \begin{align}
@@ -48,7 +71,8 @@ Mise en équation et système :
     \dot{R}(t)= \beta I(t) + \beta I(t)
 \end{align}
 
-\section{Le modèle}
+\section{Modélisation avancée}
+
 
 Exemple avec 2 variants.
 
@@ -84,22 +108,26 @@ Le \% de chance de mutation du variant 1 sur l'intervalle de temps T est défini
     mut = I_1(t)*(1-e^{\gamma T})\text{ avec }\gamma > \text{0}
 \end{align}
 
-\section{La simulation}
+\section{Modèle de l'étude}
 
+\section{Simulation numérique}
 
-
-\section{Plan du prof}
-
-\section{Résumé}
-
-\section{Introduction}
-
-\section{Développement}
-
-\section{Exemple}
+\section{Interprétation des résultats}
 
 \section{Conclusion}
 
+reprendre la problématique, réponse
+améliorations? perspectives?
+
 \section{Référence}
+
+Modeling neutral viral mutations in the spread of SARS-CoV-2 epidemics -> 
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0255438
+
+Modeling neutral viral mutations in the spread ofSARS-CoV-2 epidemics ->
+https://figshare.com/articles/journal_contribution/Simulation_parameters_analytical_calculations_real_genetic_evolution_algorithm_and_Chinese_epidemic_data_corrections_/15076462
+
+
+
 
 \end{document}
