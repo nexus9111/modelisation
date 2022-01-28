@@ -6,18 +6,23 @@
 \usepackage{amsmath}
 \graphicspath{ {./} }
 
-\lstset{
-    tabsize = 4, %% set tab space width
-    showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
-    numbers = left, %% display line numbers on the left
-    commentstyle = \color{green}, %% set comment color
-    keywordstyle = \color{blue}, %% set keyword color
-    stringstyle = \color{red}, %% set string color
-    rulecolor = \color{black}, %% set frame color to avoid being affected by text color
-    basicstyle = \small \ttfamily , %% set listing font and size
-    breaklines = true, %% enable line breaking
-    numberstyle = \tiny,
+\lstset{frame=tb,
+   language=java,
+   aboveskip=3mm,
+   belowskip=3mm,
+   showstringspaces=false,
+   columns=flexible,
+   basicstyle={\small\ttfamily},
+   numbers=none,
+   numberstyle=\tiny\color{gray},
+   keywordstyle=\color{blue},
+   commentstyle=\color{dkgreen},
+   stringstyle=\color{mauve},
+   breaklines=true,
+   breakatwhitespace=true
+   tabsize=3
 }
+
 
 \title{Modélisation de la propagation des variants du COVID}
 \author{Bouzakri Wassim, Coupet Joss, Marchetti Marie-Eden, Vasseur Pierre-Adrien}
@@ -80,5 +85,21 @@ Le \% de chance de mutation du variant 1 sur l'intervalle de temps T est défini
 \end{align}
 
 \section{La simulation}
+
+
+
+\section{Plan du prof}
+
+\section{Résumé}
+
+\section{Introduction}
+
+\section{Développement}
+
+\section{Exemple}
+
+\section{Conclusion}
+
+\section{Référence}
 
 \end{document}
