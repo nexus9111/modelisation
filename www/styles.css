@@ -1,25 +1,43 @@
+h1 {
+  margin-top: 0;
+  color: coral;
+}
+
 .chartWrapper {
-  width: 80%;
+  width: 100%;
   height: auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .inputWrapper {
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
+  flex-direction: row;
+  margin: 2rem;
 }
 
 .inputWrapper > input {
   margin-bottom: 1rem;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+  max-width: 20rem;
+  margin-right: 5rem;
+}
+
+.rule {
+  display: hidden;
+}
+
 label {
   font-size: 1rem;
   font-weight: 500;
+  color: steelblue;
+  margin-bottom: 0.2rem;
 }
 
 input {
@@ -27,7 +45,13 @@ input {
   border: 1px solid #ccc;
   padding: 0.5rem;
   width: 15rem;
+  margin-bottom: 0.3rem;
 }
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+} 
 
 button {
   width: max-content;
@@ -37,6 +61,7 @@ button {
   border-radius: 0.5rem;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  min-height: 5rem;
 }
 
 button:hover {
