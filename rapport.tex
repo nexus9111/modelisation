@@ -95,9 +95,10 @@ On fait donc un nouveau système qui permet une interaction entre les variants e
     \dot{R}(t)= \beta_1 I_1(t) + \beta_2 I_2(t)
 \end{align}
 \noindent
-Lors de la création de ce modèle, on a définit la règle suivante : \\
+Lors de la création de ce modèle, on a définit les règles suivante : \\
 \begin{enumerate}
-    \item On part du principe que l'on ne peut être contaminé par un seul variant uniquement. \\
+    \item On ne peut être infecté que par un variant à la fois. \\
+    \item Après s'être remis, on ne peut plus être infecté par un variant. \\
 \end{enumerate}
 
 \noindent
@@ -127,18 +128,36 @@ Sinon F(T) = \\
 
 \section{Simulations numériques}
 
+Dans cette partie, on va réaliser plusieurs simulations avec différents paramètres. Ces simulations sont produites avec un outil que l'on a développé et déployé en ligne, disponible à l'adresse suivante : https://modelisation.vercel.app/ \\
+
+\subsection{Simulation 1}
+...
+\subsection{Simulation 2}
+...
+\subsection{Simulation 3}
+...
+\subsection{Simulation 4}
+.......
 
 \section{Interprétation des résultats}
 
-Sur un temps t défini, résultats :\\
+Sur un temps T défini, résultats :\\
 - apparition de nouveaux variants par mutations, nombre final de variants\\
 - impact sur les personnes saines, en rémission\\
-- mutation qui prend le dessus sur son variant père (extaire caractéristiques)\\
+- mutation qui prend le dessus sur son variant père (extraire caractéristiques)\\
 
 \section{Conclusion}
 
 reprendre la problématique, réponse\\
-améliorations? perspectives?\\
+
+Concernant les perspectives d'améliorations, nous pouvons envisager :\\
+\begin{enumerate}
+    \item La gestion du nombre de variants de départ. Cela permettrait d'approfondir encore plus les possibilité de simulation. \\
+    \item L'ajout d'une notion de graine lié au randomisateur. Avec cela, on peut s'assurer que les résultats obtenus sont toujours identiques pour les mêmes paramètres bien que l'on utilise un système se basant sur une forme d'aléatoire. \\
+    \item La possibilité de se faire infecter par plusieurs variants en même temps. \\
+    \item La possibilité de se faire infecter une nouvelle fois après guérison d'un autre variant. \\
+    \item L'ajout d'une notion de vaccination, les personnes saines pourraient être vaccinées ou non ainsi que les personnes remises. \\
+\end{enumerate}
 
 \section{Référence}
 
