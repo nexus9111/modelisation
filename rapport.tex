@@ -129,9 +129,45 @@ Sinon F(T) = \\
 \section{Simulations numériques}
 
 Dans cette partie, on va réaliser plusieurs simulations avec différents paramètres. Ces simulations sont produites avec un outil que l'on a développé et déployé en ligne, disponible à l'adresse suivante : https://modelisation.vercel.app/ \\
+Les paramètres sont les suivants : \\
+\begin{enumerate}
+    \item Taux de personnes saines -> 0,97
+    \item Taux de personnes en rémission -> 0
+    \item Gamma pour la probabilité de mutation du virus -> 0,01
+    \item Probabilité de créer un nouveau variant avec des paramètres très éloignées de son parent -> 1
+    \item Durée de la simulation en jours -> 2000\\
+\end{enumerate}
+Pour le variant 1 : 
+\begin{enumerate}
+    \item Taux de personnes infecté -> 0,01
+    \item Force de contagation du virus -> 0,01
+    \item Virulence du virus -> 0,001\\
+\end{enumerate}
+Pour le variant 2 : 
+\begin{enumerate}
+    \item Taux de personnes infecté -> 0,02
+    \item Force de contagation du virus -> 0,01
+    \item Virulence du virus -> 0,005\\
+\end{enumerate}
 
 \subsection{Simulation 1}
-...
+
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{images/Simulation1.png}
+    \caption{Simulation 1}
+    \label{fig:simulation1}
+\end{figure}
+
+\noindent
+La simulation actuelle utilise les paramètres de base énoncé un peu plus haut. \\
+
+\begin{enumerate}
+    \item Variant 3 : Apparition au jour 297. Il est issu du variant 2. Il touche un taux plus important de la population comparé à son parent. Il survit plus longtemps et est plus contagieux.
+    \item Variant 4 : Apparition au jour 363. Il est issu du variant 1. Il ne survit pas.
+    \item Variant 5 : Apparition au jour 1320. Il est issu du variant 1. Il survit jusqu'à la fin de la simulation avec un taux de contagion supérieur aux autres variants. \\
+\end{enumerate}
+
+
 \subsection{Simulation 2}
 ...
 \subsection{Simulation 3}
@@ -140,6 +176,11 @@ Dans cette partie, on va réaliser plusieurs simulations avec différents param�
 .......
 
 \section{Interprétation des résultats}
+
+On remarque que les nouveaux variants entrainent une coupure dans les courbes des variants dont ils sont issus. \\ 
+En effet, le taux de personnes infecté par un variant est issu du taux de personne infecté par le variant parent. \\
+
+L'effet de la durée de la simulation sur les variants (à la fin, est-ce qu'un variant domine ou alors est-ce que tout le monde est remis ?) \\
 
 Sur un temps T défini, résultats :\\
 - apparition de nouveaux variants par mutations, nombre final de variants\\
@@ -150,13 +191,13 @@ Sur un temps T défini, résultats :\\
 
 reprendre la problématique, réponse\\
 
-Concernant les perspectives d'améliorations, nous pouvons envisager :\\
+Concernant les perspectives d'améliorations, nous pouvons envisager :
 \begin{enumerate}
-    \item La gestion du nombre de variants de départ. Cela permettrait d'approfondir encore plus les possibilité de simulation. \\
-    \item L'ajout d'une notion de graine lié au randomisateur. Avec cela, on peut s'assurer que les résultats obtenus sont toujours identiques pour les mêmes paramètres bien que l'on utilise un système se basant sur une forme d'aléatoire. \\
-    \item La possibilité de se faire infecter par plusieurs variants en même temps. \\
-    \item La possibilité de se faire infecter une nouvelle fois après guérison d'un autre variant. \\
-    \item L'ajout d'une notion de vaccination, les personnes saines pourraient être vaccinées ou non ainsi que les personnes remises. \\
+    \item La gestion du nombre de variants de départ. Cela permettrait d'approfondir encore plus les possibilité de simulation. 
+    \item L'ajout d'une notion de graine lié au randomisateur. Avec cela, on peut s'assurer que les résultats obtenus sont toujours identiques pour les mêmes paramètres bien que l'on utilise un système se basant sur une forme d'aléatoire. 
+    \item La possibilité de se faire infecter par plusieurs variants en même temps. 
+    \item La possibilité de se faire infecter une nouvelle fois après guérison d'un autre variant. 
+    \item L'ajout d'une notion de vaccination, les personnes saines pourraient être vaccinées ou non ainsi que les personnes remises. 
 \end{enumerate}
 
 \section{Référence}
