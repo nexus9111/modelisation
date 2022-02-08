@@ -129,7 +129,7 @@ Sinon F(T) = \\
 \section{Simulations numériques}
 
 Dans cette partie, on va réaliser plusieurs simulations avec différents paramètres. Ces simulations sont produites avec un outil que l'on a développé et déployé en ligne, disponible à l'adresse suivante : https://modelisation.vercel.app/ \\
-Les paramètres sont les suivants : \\
+Les paramètres initiaux sont les suivants : \\
 \begin{enumerate}
     \item Taux de personnes saines -> 0,97
     \item Taux de personnes en rémission -> 0
@@ -140,15 +140,18 @@ Les paramètres sont les suivants : \\
 Pour le variant 1 : 
 \begin{enumerate}
     \item Taux de personnes infecté -> 0,01
-    \item Force de contagation du virus -> 0,01
-    \item Virulence du virus -> 0,001\\
+    \item Force de contagion du variant -> 0,01
+    \item Virulence du variant -> 0,001\\
 \end{enumerate}
 Pour le variant 2 : 
 \begin{enumerate}
     \item Taux de personnes infecté -> 0,02
-    \item Force de contagation du virus -> 0,01
-    \item Virulence du virus -> 0,005\\
+    \item Force de contagion du variant -> 0,01
+    \item Virulence du variant -> 0,005\\
 \end{enumerate}
+
+Dans la majorité des simulations, on fera varier un seul de ses paramètres afin d'identifier la cause réel du changement. \\ 
+Si on se permet de modifier plusieurs paramètres en même temps, on ne peut plus être sûr de ce qui cause un possible changement observé. \\
 
 \subsection{Simulation 1}
 
@@ -160,20 +163,97 @@ Pour le variant 2 :
 
 \noindent
 La simulation actuelle utilise les paramètres de base énoncé un peu plus haut. \\
-
+On remarque la création de 7 nouveaux variants : \\
 \begin{enumerate}
-    \item Variant 3 : Apparition au jour 297. Il est issu du variant 2. Il touche un taux plus important de la population comparé à son parent. Il survit plus longtemps et est plus contagieux.
-    \item Variant 4 : Apparition au jour 363. Il est issu du variant 1. Il ne survit pas.
-    \item Variant 5 : Apparition au jour 1320. Il est issu du variant 1. Il survit jusqu'à la fin de la simulation avec un taux de contagion supérieur aux autres variants. \\
+    \item Variant 3 : Apparition au jour 19. Il est issu du variant 1. Il devient très rapidement le variant principal et touche une grande partie de la population.
+    \item Variant 4 : Apparition au jour 247. Il est issu du variant 3. Il survit avec un faible taux d'infection.
+    \item Variant 5 : Apparition au jour 517. Il est issu du variant 2. Il survit avec un faible taux d'infection.
+    \item Variant 6 : Apparition au jour 558. Il est issu du variant 3. Il hérite des propriétés de son parent et infecte une partie relativement importante de la population.
+    \item Variant 7 : Apparition au jour 934. Il est issu du variant 6. Il survit avec un faible taux d'infection.
+    \item Variant 8 : Apparition au jour 1109. Il est issu du variant 3. Il sera le variant le plus fort à la fin de la simulation.
+    \item Variant 9 : Apparition au jour 1499. Il est issu du variant 4. Il ne survit pas.
 \end{enumerate}
 
+NB pour l'interprétation -> On remarque que quasiment tout les variants sont dérivés du variant 3 ou d'un de ses enfants. Explication ? Naissance avec des caractéristiques très dfférentes de son parent. \\
 
 \subsection{Simulation 2}
-...
+
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{images/Simulation2.png}
+    \caption{Simulation 2}
+    \label{fig:simulation2}
+\end{figure}
+
+Pour cette simulation, on a décidé de modifier le paramètre suivant : 
+\begin{enumerate}
+    \item Gamma pour la probabilité de mutation du virus -> 0,005 \\
+\end{enumerate}
+\noindent
+On remarque la création de 2 nouveaux variants : \\
+\begin{enumerate}
+    \item Variant 3 : Apparition au jour 1196. Il est issu du variant 1. Il sera le variant le plus fort à la fin de la simulation.
+    \item Variant 4 : Apparition au jour 1379. Il est issu du variant 1. Il ne touche qu'un très faible taux de la population dès le début. \\
+\end{enumerate}
+
+NB pour l'interprétation -> Très forte domination du variant 1 sur le variant 2 bien que le taux d'infecté soit > pour le variant 2 au début de la simulation. Les taux de contagions sont les mêmes mais il y a une différence dans les taux de virulence. \\
+Forte différence entre le variant 3 et le variant 4. \\ Le variant 3 est issu du variant 1, avec des critères similaires car il reste fort. \\ Le variant 4 semble avoir des caractéristiques très différentes de son parent. \\ 
+
 \subsection{Simulation 3}
-...
+
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{images/Simulation3.png}
+    \caption{Simulation 3}
+    \label{fig:simulation3}
+\end{figure}
+
+Pour cette simulation, on a décidé de modifier le paramètre suivant : 
+\begin{enumerate}
+    \item Force de contagion du variant 1 -> 0,05 \\
+\end{enumerate}
+\noindent
+On remarque la création de 4 nouveaux variants : \\
+\begin{enumerate}
+    \item Variant 3 : Apparition au jour 243. Il est issu du variant 1. 
+    \item Variant 4 : Apparition au jour 372. Il est issu du variant 1.
+    \item Variant 5 : Apparition au jour 406. Il est issu du variant 3.
+    \item Variant 6 : Apparition au jour 1448. Il est issu du variant 1. \\
+\end{enumerate}
+
+NB pour l'interprétation -> On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte quasiment toute la population... \\
+
 \subsection{Simulation 4}
-.......
+
+
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{images/Simulation4.png}
+    \caption{Simulation 4}
+    \label{fig:simulation4}
+\end{figure}
+
+Pour cette simulation, on a décidé de modifier le paramètre suivant : 
+\begin{enumerate}
+    \item Virulence du variant -> 0,0001 \\
+\end{enumerate}
+\noindent
+On remarque la création de 6 nouveaux variants : \\
+\begin{enumerate}
+    \item Variant 3 : Apparition au jour 278. Il est issu du variant 1. 
+    \item Variant 4 : Apparition au jour 647. Il est issu du variant 1.
+    \item Variant 5 : Apparition au jour 1145. Il est issu du variant 4.
+    \item Variant 6 : Apparition au jour 1202. Il est issu du variant 1. 
+    \item Variant 7 : Apparition au jour 1462. Il est issu du variant 4.
+    \item Variant 8 : Apparition au jour 1479. Il est issu du variant 1. \\
+\end{enumerate}
+
+NB pour l'interprétation -> On remarque qu'avec un taux de virulence plus faible, le variant 1 infecte une bonne partie de la population et le taux de rémission reste faible après 2000j. \\
+De plus le viriant 4, issu du variant 1, est plus fort que son parent à la fin de la simulation. \\
+Inexistance du variant 2.
+
+
+\subsection{Simulation 5}
+
+Simulation avec plusieurs paramètres pour ressortir un variant enfant qui dépasse son parent et le taux de rémission ?
+
 
 \section{Interprétation des résultats}
 
@@ -181,6 +261,8 @@ On remarque que les nouveaux variants entrainent une coupure dans les courbes de
 En effet, le taux de personnes infecté par un variant est issu du taux de personne infecté par le variant parent. \\
 
 L'effet de la durée de la simulation sur les variants (à la fin, est-ce qu'un variant domine ou alors est-ce que tout le monde est remis ?) \\
+
+Si pas de simulation faisant varier la virulence du variant -> parce que l'on ne peut pas tuer les gens. Donc la virulence n'est finalement pas super intéressante ?
 
 Sur un temps T défini, résultats :\\
 - apparition de nouveaux variants par mutations, nombre final de variants\\
@@ -198,6 +280,8 @@ Concernant les perspectives d'améliorations, nous pouvons envisager :
     \item La possibilité de se faire infecter par plusieurs variants en même temps. 
     \item La possibilité de se faire infecter une nouvelle fois après guérison d'un autre variant. 
     \item L'ajout d'une notion de vaccination, les personnes saines pourraient être vaccinées ou non ainsi que les personnes remises. 
+    \item Ajouter des détails au moment de la création d'un variant (notamment sur le fait de savoir s'il est né avec des paramètres très différents de son parent.).
+    \item Enfin, il manque une notion principale, le fait de pouvoir décéder du variant. Dans nos simulations, la population est soit saine, soit en rémission soit infecté mais elle ne peut pas être infecté puis décédée.
 \end{enumerate}
 
 \section{Référence}

@@ -1,4 +1,4 @@
-# JOSS COUPET
+# Modélisation de la propagation d'un virus | Bouzakri, Coupet, Marchetti, Vasseur
 import matplotlib.pyplot as plt
 import random
 from math import exp
@@ -75,14 +75,6 @@ while (t < T):
     
     t = t + deltaT
 
-
-    # index += 1
-
-    # Stemp, Ctemp, Rtemp = S, C, R
-    # S = Stemp - alpha * deltaT * Stemp * Ctemp
-    # C = Ctemp + alpha * deltaT * Stemp * Ctemp - beta * deltaT * Ctemp
-    # R = Rtemp + beta * deltaT * Ctemp
-
 plt.plot(listR, "b", label="Remission")
 plt.plot(listS, "r", label="Sain")
 for i in range(len(variants)):
@@ -92,23 +84,5 @@ ax = plt.gca()
 ax.set_ylim([0, 1])
 plt.legend()
 plt.show()
-
-
-
-"""
-COVID
-
-- Modélisation
-- Implémentation numérique
-- Interprétation des résultats + rapport 
-
-.S(t) = (s(T + deltaT) - S(t)) / deltaT
-"""
-
-
-
-
-
-
 
 

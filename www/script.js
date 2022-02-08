@@ -275,4 +275,5 @@ lauchSimulation(data);
 document.getElementById("start").addEventListener("click", function () {
   let newestData = reinitialize(data);
   lauchSimulation(newestData);
+  window.scrollTo({top: 0, behavior: 'smooth'});
 });
