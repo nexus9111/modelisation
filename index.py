@@ -26,7 +26,6 @@ deltaT = 1
 index = 0
 
 def probaMutation(variant : Variant, t : float) -> float:
-    #tsec = t / 24 / 60 / 60
     return (variant.getI() * (1 - exp(-gamma * t)))
 
 while (t < T):
@@ -53,9 +52,9 @@ while (t < T):
     tempLen = []
     for i in range(len(variants)):
         if random.uniform(0, 1) < probaMutation(variants[i], deltaT):
-            
+
             randomPercent = random.uniform(0,100)
-            if (randomPercent > percentToCreateVariantWithLargeDifferentParametres): 
+            if (randomPercent > percentToCreateVariantWithLargeDifferentParametres):
                 new_alpha = random.uniform(variants[i].getAlpha() * 0.1, variants[i].getAlpha() * 1.9)
                 new_beta = random.uniform(variants[i].getBeta() * 0.1, variants[i].getBeta() * 1.9)
             else:
@@ -63,16 +62,16 @@ while (t < T):
                 new_beta = random.uniform(variants[i].getBeta() * 0.9, variants[i].getBeta() * 1.1)
 
             new_I = random.uniform(0, variants[i].getI() * percentOfPop)
-            newV = Variant(variants[-1].getVariant() + 1, new_I, new_alpha, new_beta) 
+            newV = Variant(variants[-1].getVariant() + 1, new_I, new_alpha, new_beta)
             variants[i].setI(variants[i].getI() - new_I)
             for i in range(int(t)):
                 newV.addToArray(None)
-            
+
             tempLen.append(newV)
-    
+
     for i in tempLen:
         variants.append(i)
-    
+
     t = t + deltaT
 
 plt.plot(listR, "b", label="Remission")
@@ -84,5 +83,3 @@ ax = plt.gca()
 ax.set_ylim([0, 1])
 plt.legend()
 plt.show()
-
-

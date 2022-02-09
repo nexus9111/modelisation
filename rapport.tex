@@ -38,8 +38,11 @@ Une approche différente et plus simple a été choisie afin de permettre la com
 
 \noindent
 Tout d'abord, on présentera la modélisation de départ de la propagation de la Covid-19 initialisée avec un seul variant. \par
+\noindent
 Ensuite, on se penchera sur la modélisation plus complexe initialisée avec deux variants, sur lequel on concentra notre étude.\par
+\noindent
 Puis, on réalisera plusieurs simulations différentes dans l'objectif d'interpréter le comportement de ce modèle grâce aux résultats.\par
+\noindent
 Enfin, on concluera notre étude.\\
 
 \section{Modélisation de départ}
@@ -50,7 +53,7 @@ Les variables de base pour seulement 1 virus sont les suivantes :
 \begin{align}
     S(t)= \text{\% de personnes saines dans la population au temps t} \\
     I(t)= \text{\% de personnes contaminées dans la population au temps t} \\
-    R(t)= \text{\% de personnes en rémission dans la population au temps t} \\
+    R(t)= \text{\% de personnes en rémission dans la population au temps t}
 \end{align}
 \noindent
 \textalpha \space représente la force de contagion du virus. \\
@@ -60,7 +63,7 @@ La simulation discrétisée par le temps est représentée dans le système d'é
 \begin{align}
     \dot{S}(t)= -\alpha S(t)I(t) \\
     \dot{I}(t)= \alpha S(t)I(t)-\beta I(t) \\
-    \dot{R}(t)= \beta I(t) + \beta I(t)
+    \dot{R}(t)= \beta I(t)
 \end{align}
 \noindent
 Cette mise en équation permet de simuler facilement la propagation de la Covid-19 au sein d'une population saine.\\
@@ -77,7 +80,7 @@ Les variables de notre nouveau modèle sont les mêmes que précédemment, c'est
     I_1(t)= \text{\% d'infecté au variant 1.} \\
     I_2(t)= \text{\% d'infecté au variant 2.} \\
     R_1(t)= \text{\% de remis au variant 1.} \\
-    R_2(t)= \text{\% de remis au variant 2.} \\
+    R_2(t)= \text{\% de remis au variant 2.}
 \end{align}
 \noindent
 On obtient donc 2 systèmes d'équations différents. \\
@@ -156,6 +159,10 @@ Pour le variant 2 :
 Dans la majorité des simulations, on fera varier un seul de ses paramètres afin d'identifier la cause réel du changement. \\
 Si on se permet de modifier plusieurs paramètres en même temps, on ne peut plus être sûr de ce qui cause un possible changement observé. \\
 
+De plus, on remarque que les nouveaux variants entrainent une coupure dans les courbes des variants dont ils sont issus. \\
+En effet, le taux de personnes infecté par un variant est issu du taux de personne infecté par le variant parent. \\
+Nous avons décidé de faire en sorte que la création d'un variant affecte un grand nombre de la population du variant parent afin d'avoir des résultats intéressant directement. Si nous avions décidé de faire muter qu'une petite partie de notre population, nous aurions eu des difficultés à étudier le développement des variants. En effet, dans la réalité, il y a des millions de variants qui naissent chaque jour mais seulement un faible nombre survit. Pour des raisons de performances, nous ne pouvons pas modéliser des millions de variants.
+
 \subsection{Simulation de référence}
 
 \begin{figure}[h]
@@ -176,14 +183,14 @@ On remarque la création de 6 nouveaux variants : \\
     \item Variant 8 : Apparition dans les derniers jours de la modélisation.
 \end{enumerate}
 
-On remarque que quasiment tout les variants sont dérivés du variant 3 ou d'un de ses enfants. Explication ? Naissance avec des caractéristiques très dfférentes de son parent. \\
+La simulation de référence montre que les
 
 \subsection{Influence de la mutabilité du virus}
 
 \begin{figure}[h]
   \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=1\linewidth]{images/Simulation2.png}
+  \includegraphics[width=1\linewidth]{images/Simulation2_1.png}
   \caption{Mutabilité du virus plus faible}
   \label{fig:sub1}
 \end{subfigure}%
@@ -203,8 +210,8 @@ Pour cette simulation, on a décidé de modifier le paramètre suivant :
 \noindent
 On remarque la création de 2 nouveaux variants. \\
 
-Très forte domination du variant 1 sur le variant 2 bien que le taux d'infecté soit > pour le variant 2 au début de la simulation. Les taux de contagions sont les mêmes mais il y a une différence dans les taux de virulence. \\
-Forte différence entre le variant 3 et le variant 4. \\ Le variant 3 est issu du variant 1, avec des critères similaires car il reste fort. \\ Le variant 4 semble avoir des caractéristiques très différentes de son parent. \\
+Il y a une très forte domination du variant 1 sur le variant 2 bien que le taux d'infecté soit supérieur pour le variant 2 au début de la simulation. Les taux de contagions sont les mêmes mais il y a une différence dans les taux de virulence. \\
+Il n'y a pas de forte différence entre le variant 3 et 4, ils sont tout les deux issus du variant 1. \\ Ils restent plus fort que le variant 1 parent.
 
 \subsection{Influence de la force de contagion du premier variant}
 
@@ -221,10 +228,9 @@ Pour cette simulation, on a décidé de modifier le paramètre suivant :
 \noindent
 On remarque la création de 4 nouveaux variants. \\
 
-On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte quasiment toute la population... \\
+On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte quasiment toute la population très rapidement et devient le parent ou grand-parent de tout les variants. \\
 
 \subsection{Influence de la virulence du premier variant}
-
 
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{images/Simulation4.png}
@@ -239,10 +245,8 @@ Pour cette simulation, on a décidé de modifier le paramètre suivant :
 \noindent
 On remarque la création de 6 nouveaux variants. \\
 
-On remarque qu'avec un taux de virulence plus faible, le variant 1 infecte une bonne partie de la population et le taux de rémission reste faible après 2000j. \\
-De plus le viriant 4, issu du variant 1, est plus fort que son parent à la fin de la simulation. \\
-Inexistance du variant 2.
-
+On remarque qu'avec un taux de virulence plus faible, le variant 1 infecte quasiment toute la population et le taux de rémission reste faible après 2000 jours. \\
+De plus la plupart des variants (Variant 4, 5, 7, 8, 10) sont plus fort que le variant parent à la fin de la simulation. \\
 
 \subsection{Simulation pour avoir un variant gagnant sur le taux de rémission}
 
@@ -258,31 +262,27 @@ Pour cette simulation, on a décidé de modifier les paramètres suivants :
     \item Virulence du variant 2 = 0,0002
 \end{enumerate}
 
+Durant cette simulation, nous avons modifié plusieurs paramètres afin d'arriver à un résultat voulu : avoir un variant avec un taux d'infectés supérieur au taux de rémission. On a donc modifié la mutabilité du virus afin d'éviter la création de variant et d'entraîner la chute des variants de base. De plus, on a altéré la virulence du variant 2 afin qu'il soit plus fort. On remarque donc qu'à la fin de la simulation, on a le résultat voulu. Cependant, on peut être sûr que si la simulation avait duré plus longtemps, le taux de rémission serait devenu majoritaire.
+
 
 \section{Discussion des résultats}
 
-Dans cette partie, on s'intéressera à l'interprétation des résultats de chaque simulation afin d'en déduire les paramètres les plus intéressants pour le dévéloppement de nos variants.
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{images/Simulation6.png}
+    \caption{Simulation avec les variants initiaux}
+    \label{fig:simulation6}
+\end{figure}
 
+Dans cette partie, nous allons comparer nos différentes simulations à la simulation de la figure 6 qui représente notre modèle sans création de nouveaux variants.
 
+On peut noter qu'étant donné que la population ne baisse pas (le décès n'est pas modélisé), elle ne peut donc que se remettre. Ainsi, avec une durée 'infinie', on obtient un taux de rémission toujours revenu à la totalité de la population. \\
 
-On remarque que les nouveaux variants entrainent une coupure dans les courbes des variants dont ils sont issus. \\
-En effet, le taux de personnes infecté par un variant est issu du taux de personne infecté par le variant parent. \\
-Nous avons décidé de faire en sorte que la création d'un variant affecte un grand nombre de la population du variant parent afin d'avoir des résultats intéressant directement. Si nous avions décidé de faire muter qu'une petite partie de notre population, nous aurions eu des difficultés à étudier le développement des variants. En effet, dans la réalité, il y a des millions de variants qui naissent chaque jour mais seulement un faible nombre survit. Pour des raisons de performances, nous ne pouvons pas modéliser des millions de variants.
-
-L'effet de la durée de la simulation sur les variants (à la fin, est-ce qu'un variant domine ou alors est-ce que tout le monde est remis ?) \\
-
-Si pas de simulation faisant varier la virulence du variant -> parce que l'on ne peut pas tuer les gens. Donc la virulence n'est finalement pas super intéressante ?
-
-Sur un temps T défini, résultats :\\
-- apparition de nouveaux variants par mutations, nombre final de variants\\
-- impact sur les personnes saines, en rémission\\
-- mutation qui prend le dessus sur son variant père (extraire caractéristiques)\\
 
 \section{Conclusion}
 
 Le comportement de l'épidemie de la COVID-19 est-il influencé par la circulation, la mutation et l'interaction des variants ?
-A partir de nos simulations, on a conclu que la circulation et la mutation des variants permet a un virus d'infecter la quasi-totalité de la population très rapidement. L'interaction entre les variants permet de conclure que si le taux de virulence est faible, un variant enfant peut contaminer plus de monde q'un variant parent. \\
-
+A partir de nos simulations, on a conclu que la circulation et la mutation des variants permet a un virus d'infecter la quasi-totalité de la population très rapidement. L'interaction entre les variants permet de conclure que si le taux de virulence est faible, un variant enfant peut contaminer plus de monde qu'un variant parent. \\
+\noindent
 Concernant les perspectives d'améliorations, nous pouvons envisager :
 \begin{enumerate}
     \item La gestion du nombre de variants de départ. Cela permettrait d'approfondir encore plus les possibilité de simulation.
