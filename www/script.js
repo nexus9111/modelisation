@@ -91,6 +91,15 @@ function generateRandomColor() {
   return color;
 }
 
+function generateColor(index) {
+  const colors = ['#C0C0C0', '#800000', '#FF0000', '#48d1cc', '#FF00FF', '#808000', '#FFFF00', '#000080', '#faebd7', '#d2691e', '#ff7f50',
+    '#00FFFF', '#ff1493', '#ffd700', '#ff69b4', '#800080', '#808000', '	#cd853f', '#6a5acd', '	#d8bfd8'];
+  if (index < colors.length) {
+    return colors[index];
+  }
+  return generateRandomColor();
+}
+
 function generatePlotData({ T, evolutionS, evolutionR, variants }) {
   let labels = new Array(T);
   for (let i = 0; i < T; ++i) {
@@ -103,18 +112,18 @@ function generatePlotData({ T, evolutionS, evolutionR, variants }) {
       {
         label: "Sain",
         data: evolutionS,
-        borderColor: generateRandomColor(),
+        borderColor: '#32CD32',
       },
       {
         label: "Rémission",
         data: evolutionR,
-        borderColor: generateRandomColor(),
+        borderColor: '#1E90FF',
       },
-      ...variants.map((variant) => {
+      ...variants.map((variant, index) => {
         return {
           label: "Variant " + variant.variant,
           data: variant.Array,
-          borderColor: generateRandomColor(),
+          borderColor: generateColor(index),
           fill: false,
         };
       }),
