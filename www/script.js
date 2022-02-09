@@ -73,6 +73,39 @@ alphaV2Input.addEventListener("change", () => (input.variants[1].Alpha = alphaV2
 betaV1Input.addEventListener("change", () => (input.variants[0].Beta = betaV1Input.value));
 betaV2Input.addEventListener("change", () => (input.variants[1].Beta = betaV2Input.value));
 
+let chartMode = 'line';
+
+if (chartMode == 'line') {
+  document.getElementById("lineButton").classList.add("selected");
+} else {
+  document.getElementById("lineButton").classList.add("selected");
+}
+
+document.getElementById("lineButton").addEventListener("click", function() {
+  if(chartMode == 'line') {
+    document.getElementById("lineButton").classList.remove("selected");
+    document.getElementById("stackButton").classList.add("selected");
+  } else {
+    chartMode = 'line';
+    document.getElementById("lineButton").classList.add("selected");
+    document.getElementById("stackButton").classList.remove("selected");
+  }
+  generateChart(data);
+});
+
+document.getElementById("stackButton").addEventListener("click", function() {
+  if(chartMode == 'line') {
+    chartMode = 'stack';
+    document.getElementById("lineButton").classList.remove("selected");
+    document.getElementById("stackButton").classList.add("selected");
+  } else {
+    chartMode = 'line';
+    document.getElementById("lineButton").classList.add("selected");
+    document.getElementById("stackButton").classList.remove("selected");
+  }
+  generateChart(data);
+});
+
 
 function probaMutation(variant, t, gamma) {
   return variant.I * (1 - Math.exp(-gamma * t));
@@ -113,18 +146,23 @@ function generatePlotData({ T, evolutionS, evolutionR, variants }) {
         label: "Sain",
         data: evolutionS,
         borderColor: '#32CD32',
+        fill: chartMode == 'stack',
+        backgroundColor: chartMode == 'stack' ? '#32CD32' : null,
       },
       {
         label: "Rémission",
         data: evolutionR,
         borderColor: '#1E90FF',
+        fill: chartMode == 'stack',
+        backgroundColor: chartMode == 'stack' ? '#1E90FF' : null,
       },
       ...variants.map((variant, index) => {
         return {
           label: "Variant " + variant.variant,
           data: variant.Array,
           borderColor: generateColor(index),
-          fill: false,
+          fill: chartMode == 'stack',
+          backgroundColor: chartMode == 'stack' ? generateColor(index) : null,
         };
       }),
     ],
@@ -143,12 +181,18 @@ function generateChart(data) {
       animation: false,
       spanGaps: true,
       showLine: false,
+      interaction: {
+        mode: 'nearest',
+        axis: 'x',
+        intersect: false
+      },
       scales: {
         x: {
           min: 0,
           max: data.T,
         },
         y: {
+          stacked: chartMode == 'stack',
           min: 0,
           max: 1,
         },

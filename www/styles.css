@@ -50,8 +50,9 @@ input {
 
 .buttonWrapper {
   display: flex;
+  flex-direction: column;
   align-items: center;
-} 
+}
 
 button {
   width: max-content;
@@ -65,6 +66,29 @@ button {
 }
 
 button:hover {
+  background-color: coral;
+  color: white;
+}
+
+
+.selectButton {
+  width: 5rem;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0.3rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  min-height: 1rem;
+  margin-bottom: 2rem;
+}
+
+button:hover {
+  background-color: coral;
+  color: white;
+}
+
+.selected {
   background-color: coral;
   color: white;
 }
