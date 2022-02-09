@@ -1,11 +1,12 @@
 \documentclass{article}
-\usepackage[T1]{fontenc} 
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage{listings, xcolor, graphicx}
 \usepackage{amsmath}
 \usepackage{textgreek}
 \usepackage{enumitem}
+\usepackage{subcaption}
 \graphicspath{ {./} }
 
 \title{Modélisation de la propagation des variants du COVID}
@@ -18,11 +19,13 @@
 
 \section{Résumé}
 
-Dans ce rapport, ...
+Dans ce rapport, on a répondu a la problématique suivante :\\
+Le comportement de l'épidemie de la COVID-19 est-il influencé par la circulation, la mutation et l'interaction de variants ?
+Pour répondre à cette question, on a mis en place un certain nombre d'équation afin de réaliser des simulations. \\Celles-ci nous ont permis d'en conclure que la circulation, la mutation et l'interaction influencent le comportement de l'épidemie.
 
 \section{Introduction}
 
-Dans ce rapport, on va étudier la propagation de la Covid-19 par le biais des variants.
+Dans ce rapport, on va étudier la propagation de la COVID-19 par le biais des variants.
 On se demande alors si leur circulation et mutation influencent le comportement de l'épidémie, en plus de considérer leur interaction entre eux.\\
 
 \noindent
@@ -43,7 +46,7 @@ Enfin, on concluera notre étude.\\
 
 La modélisation de départ est très basique et représente l'évolution d'un seul variant en prenant en compte sa virulence et sa force de contamination.\\
 \noindent
-Les variables de base pour seulement 1 virus sont les suivantes : 
+Les variables de base pour seulement 1 virus sont les suivantes :
 \begin{align}
     S(t)= \text{\% de personnes saines dans la population au temps t} \\
     I(t)= \text{\% de personnes contaminées dans la population au temps t} \\
@@ -53,7 +56,7 @@ Les variables de base pour seulement 1 virus sont les suivantes :
 \textalpha \space représente la force de contagion du virus. \\
 \textbeta \space représente la virulence du virus. \\
 \noindent
-La simulation discrétisée par le temps est représentée dans le système d'équation suivante : 
+La simulation discrétisée par le temps est représentée dans le système d'équation suivante :
 \begin{align}
     \dot{S}(t)= -\alpha S(t)I(t) \\
     \dot{I}(t)= \alpha S(t)I(t)-\beta I(t) \\
@@ -64,7 +67,7 @@ Cette mise en équation permet de simuler facilement la propagation de la Covid-
 
 \section{Modélisation avancée}
 
-Afin de modéliser un modèle à X variants, un nouveau système d'équation est nécessaire.\\ 
+Afin de modéliser un modèle à X variants, un nouveau système d'équation est nécessaire.\\
 Pour débuter, on a définit un nouveau modèle avec 2 variants qui pourra être modifié pour permettre de simuler X variants.\\
 \noindent
 Les variables de notre nouveau modèle sont les mêmes que précédemment, c'est-à-dire :
@@ -113,7 +116,7 @@ Si une mutation doit être réalisé alors \\
 T est un nombre aléatoire tel que 0 < T < 100 \\
 t est la probabilité que les propriétés d'un variant soient fortement différentes des propriétés du parent.\\
 Si T > t \\
-Alors F(T) = 
+Alors F(T) =
 \begin{align}
     new_\alpha = x, \alpha_{variant} \times 1.2 < x < \alpha_{variant} \times 1.4 \\
     new_\beta = x, \beta_{variant} \times 0.9 < x < \beta_{variant} \times 1.1
@@ -131,134 +134,140 @@ Sinon F(T) = \\
 Dans cette partie, on va réaliser plusieurs simulations avec différents paramètres. Ces simulations sont produites avec un outil que l'on a développé et déployé en ligne, disponible à l'adresse suivante : https://modelisation.vercel.app/ \\
 Les paramètres initiaux sont les suivants : \\
 \begin{enumerate}
-    \item Taux de personnes saines -> 0,97
-    \item Taux de personnes en rémission -> 0
-    \item Gamma pour la probabilité de mutation du virus -> 0,01
-    \item Probabilité de créer un nouveau variant avec des paramètres très éloignées de son parent -> 1
-    \item Durée de la simulation en jours -> 2000\\
+    \item Taux de personnes saines = 0,97
+    \item Taux de personnes en rémission = 0
+    \item Mutabilité du virus = 0,01
+    \item Probabilité de créer un nouveau variant avec des paramètres très éloignées de son parent = 1
+    \item Durée de la simulation en jours = 2000\\
 \end{enumerate}
-Pour le variant 1 : 
+Pour le variant 1 :
 \begin{enumerate}
-    \item Taux de personnes infecté -> 0,01
-    \item Force de contagion du variant -> 0,01
-    \item Virulence du variant -> 0,001\\
+    \item Taux de personnes infecté = 0,01
+    \item Force de contagion du variant = 0,01
+    \item Virulence du variant = 0,001\\
 \end{enumerate}
-Pour le variant 2 : 
+Pour le variant 2 :
 \begin{enumerate}
-    \item Taux de personnes infecté -> 0,02
-    \item Force de contagion du variant -> 0,01
-    \item Virulence du variant -> 0,005\\
+    \item Taux de personnes infecté = 0,02
+    \item Force de contagion du variant = 0,01
+    \item Virulence du variant = 0,005\\
 \end{enumerate}
 
-Dans la majorité des simulations, on fera varier un seul de ses paramètres afin d'identifier la cause réel du changement. \\ 
+Dans la majorité des simulations, on fera varier un seul de ses paramètres afin d'identifier la cause réel du changement. \\
 Si on se permet de modifier plusieurs paramètres en même temps, on ne peut plus être sûr de ce qui cause un possible changement observé. \\
 
-\subsection{Simulation 1}
+\subsection{Simulation de référence}
 
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{images/Simulation1.png}
-    \caption{Simulation 1}
+    \caption{Simulation de référence}
     \label{fig:simulation1}
 \end{figure}
 
 \noindent
-La simulation actuelle utilise les paramètres de base énoncé un peu plus haut. \\
-On remarque la création de 7 nouveaux variants : \\
+La simulation de référence utilise les paramètres de base énoncé un peu plus haut. \\
+On remarque la création de 6 nouveaux variants : \\
 \begin{enumerate}
-    \item Variant 3 : Apparition au jour 19. Il est issu du variant 1. Il devient très rapidement le variant principal et touche une grande partie de la population.
-    \item Variant 4 : Apparition au jour 247. Il est issu du variant 3. Il survit avec un faible taux d'infection.
-    \item Variant 5 : Apparition au jour 517. Il est issu du variant 2. Il survit avec un faible taux d'infection.
-    \item Variant 6 : Apparition au jour 558. Il est issu du variant 3. Il hérite des propriétés de son parent et infecte une partie relativement importante de la population.
-    \item Variant 7 : Apparition au jour 934. Il est issu du variant 6. Il survit avec un faible taux d'infection.
-    \item Variant 8 : Apparition au jour 1109. Il est issu du variant 3. Il sera le variant le plus fort à la fin de la simulation.
-    \item Variant 9 : Apparition au jour 1499. Il est issu du variant 4. Il ne survit pas.
+    \item Variant 3 : Apparition au jour 231. Il est issu du variant 2. Il ne survit pas.
+    \item Variant 4 : Apparition au jour 561. Il est issu du variant 1.
+    \item Variant 5 : Apparition au jour 627. Il est issu du variant 4. Il survit avec un faible taux d'infection.
+    \item Variant 6 : Apparition au jour 660. Il est issu du variant 2. Il ne survit pas.
+    \item Variant 7 : Apparition au jour 1419. Il est issu du variant 4. Il ne survit pas.
+    \item Variant 8 : Apparition dans les derniers jours de la modélisation.
 \end{enumerate}
 
-NB pour l'interprétation -> On remarque que quasiment tout les variants sont dérivés du variant 3 ou d'un de ses enfants. Explication ? Naissance avec des caractéristiques très dfférentes de son parent. \\
+On remarque que quasiment tout les variants sont dérivés du variant 3 ou d'un de ses enfants. Explication ? Naissance avec des caractéristiques très dfférentes de son parent. \\
 
-\subsection{Simulation 2}
+\subsection{Influence de la mutabilité du virus}
 
 \begin{figure}[h]
-    \includegraphics[width=\linewidth]{images/Simulation2.png}
-    \caption{Simulation 2}
-    \label{fig:simulation2}
+  \begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{images/Simulation2.png}
+  \caption{Mutabilité du virus plus faible}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{images/Simulation2_2.png}
+  \caption{Mutabilité du virus plus haute}
+  \label{fig:sub2}
+\end{subfigure}
 \end{figure}
 
-Pour cette simulation, on a décidé de modifier le paramètre suivant : 
+Pour cette simulation, on a décidé de modifier le paramètre suivant :
 \begin{enumerate}
-    \item Gamma pour la probabilité de mutation du virus -> 0,005 \\
+    \item Mutabilité du virus = 0,005 pour la figure (a)
+    \item Mutabilité du virus = 0,05 pour la figure (b) \\
 \end{enumerate}
 \noindent
-On remarque la création de 2 nouveaux variants : \\
-\begin{enumerate}
-    \item Variant 3 : Apparition au jour 1196. Il est issu du variant 1. Il sera le variant le plus fort à la fin de la simulation.
-    \item Variant 4 : Apparition au jour 1379. Il est issu du variant 1. Il ne touche qu'un très faible taux de la population dès le début. \\
-\end{enumerate}
+On remarque la création de 2 nouveaux variants. \\
 
-NB pour l'interprétation -> Très forte domination du variant 1 sur le variant 2 bien que le taux d'infecté soit > pour le variant 2 au début de la simulation. Les taux de contagions sont les mêmes mais il y a une différence dans les taux de virulence. \\
-Forte différence entre le variant 3 et le variant 4. \\ Le variant 3 est issu du variant 1, avec des critères similaires car il reste fort. \\ Le variant 4 semble avoir des caractéristiques très différentes de son parent. \\ 
+Très forte domination du variant 1 sur le variant 2 bien que le taux d'infecté soit > pour le variant 2 au début de la simulation. Les taux de contagions sont les mêmes mais il y a une différence dans les taux de virulence. \\
+Forte différence entre le variant 3 et le variant 4. \\ Le variant 3 est issu du variant 1, avec des critères similaires car il reste fort. \\ Le variant 4 semble avoir des caractéristiques très différentes de son parent. \\
 
-\subsection{Simulation 3}
+\subsection{Influence de la force de contagion du premier variant}
 
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{images/Simulation3.png}
-    \caption{Simulation 3}
+    \caption{Influence de la force de contagion}
     \label{fig:simulation3}
 \end{figure}
 
-Pour cette simulation, on a décidé de modifier le paramètre suivant : 
+Pour cette simulation, on a décidé de modifier le paramètre suivant :
 \begin{enumerate}
-    \item Force de contagion du variant 1 -> 0,05 \\
+    \item Force de contagion du variant 1 = 0,05 \\
 \end{enumerate}
 \noindent
-On remarque la création de 4 nouveaux variants : \\
-\begin{enumerate}
-    \item Variant 3 : Apparition au jour 243. Il est issu du variant 1. 
-    \item Variant 4 : Apparition au jour 372. Il est issu du variant 1.
-    \item Variant 5 : Apparition au jour 406. Il est issu du variant 3.
-    \item Variant 6 : Apparition au jour 1448. Il est issu du variant 1. \\
-\end{enumerate}
+On remarque la création de 4 nouveaux variants. \\
 
-NB pour l'interprétation -> On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte quasiment toute la population... \\
+On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte quasiment toute la population... \\
 
-\subsection{Simulation 4}
+\subsection{Influence de la virulence du premier variant}
 
 
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{images/Simulation4.png}
-    \caption{Simulation 4}
+    \caption{Influence de la virulence du premier variant}
     \label{fig:simulation4}
 \end{figure}
 
-Pour cette simulation, on a décidé de modifier le paramètre suivant : 
+Pour cette simulation, on a décidé de modifier le paramètre suivant :
 \begin{enumerate}
-    \item Virulence du variant -> 0,0001 \\
+    \item Virulence du variant = 0,0001 \\
 \end{enumerate}
 \noindent
-On remarque la création de 6 nouveaux variants : \\
-\begin{enumerate}
-    \item Variant 3 : Apparition au jour 278. Il est issu du variant 1. 
-    \item Variant 4 : Apparition au jour 647. Il est issu du variant 1.
-    \item Variant 5 : Apparition au jour 1145. Il est issu du variant 4.
-    \item Variant 6 : Apparition au jour 1202. Il est issu du variant 1. 
-    \item Variant 7 : Apparition au jour 1462. Il est issu du variant 4.
-    \item Variant 8 : Apparition au jour 1479. Il est issu du variant 1. \\
-\end{enumerate}
+On remarque la création de 6 nouveaux variants. \\
 
-NB pour l'interprétation -> On remarque qu'avec un taux de virulence plus faible, le variant 1 infecte une bonne partie de la population et le taux de rémission reste faible après 2000j. \\
+On remarque qu'avec un taux de virulence plus faible, le variant 1 infecte une bonne partie de la population et le taux de rémission reste faible après 2000j. \\
 De plus le viriant 4, issu du variant 1, est plus fort que son parent à la fin de la simulation. \\
 Inexistance du variant 2.
 
 
-\subsection{Simulation 5}
+\subsection{Simulation pour avoir un variant gagnant sur le taux de rémission}
 
-Simulation avec plusieurs paramètres pour ressortir un variant enfant qui dépasse son parent et le taux de rémission ?
+\begin{figure}[h]
+    \includegraphics[width=\linewidth]{images/Simulation5.png}
+    \caption{Simulation pour avoir un variant gagnant sur le taux de rémission}
+    \label{fig:simulation5}
+\end{figure}
+
+Pour cette simulation, on a décidé de modifier les paramètres suivants :
+\begin{enumerate}
+    \item Mutabilité du virus = 0,0001
+    \item Virulence du variant 2 = 0,0002
+\end{enumerate}
 
 
-\section{Interprétation des résultats}
+\section{Discussion des résultats}
 
-On remarque que les nouveaux variants entrainent une coupure dans les courbes des variants dont ils sont issus. \\ 
+Dans cette partie, on s'intéressera à l'interprétation des résultats de chaque simulation afin d'en déduire les paramètres les plus intéressants pour le dévéloppement de nos variants.
+
+
+
+On remarque que les nouveaux variants entrainent une coupure dans les courbes des variants dont ils sont issus. \\
 En effet, le taux de personnes infecté par un variant est issu du taux de personne infecté par le variant parent. \\
+Nous avons décidé de faire en sorte que la création d'un variant affecte un grand nombre de la population du variant parent afin d'avoir des résultats intéressant directement. Si nous avions décidé de faire muter qu'une petite partie de notre population, nous aurions eu des difficultés à étudier le développement des variants. En effet, dans la réalité, il y a des millions de variants qui naissent chaque jour mais seulement un faible nombre survit. Pour des raisons de performances, nous ne pouvons pas modéliser des millions de variants.
 
 L'effet de la durée de la simulation sur les variants (à la fin, est-ce qu'un variant domine ou alors est-ce que tout le monde est remis ?) \\
 
@@ -271,15 +280,16 @@ Sur un temps T défini, résultats :\\
 
 \section{Conclusion}
 
-reprendre la problématique, réponse\\
+Le comportement de l'épidemie de la COVID-19 est-il influencé par la circulation, la mutation et l'interaction des variants ?
+A partir de nos simulations, on a conclu que la circulation et la mutation des variants permet a un virus d'infecter la quasi-totalité de la population très rapidement. L'interaction entre les variants permet de conclure que si le taux de virulence est faible, un variant enfant peut contaminer plus de monde q'un variant parent. \\
 
 Concernant les perspectives d'améliorations, nous pouvons envisager :
 \begin{enumerate}
-    \item La gestion du nombre de variants de départ. Cela permettrait d'approfondir encore plus les possibilité de simulation. 
-    \item L'ajout d'une notion de graine lié au randomisateur. Avec cela, on peut s'assurer que les résultats obtenus sont toujours identiques pour les mêmes paramètres bien que l'on utilise un système se basant sur une forme d'aléatoire. 
-    \item La possibilité de se faire infecter par plusieurs variants en même temps. 
-    \item La possibilité de se faire infecter une nouvelle fois après guérison d'un autre variant. 
-    \item L'ajout d'une notion de vaccination, les personnes saines pourraient être vaccinées ou non ainsi que les personnes remises. 
+    \item La gestion du nombre de variants de départ. Cela permettrait d'approfondir encore plus les possibilité de simulation.
+    \item L'ajout d'une notion de graine lié au randomisateur. Avec cela, on peut s'assurer que les résultats obtenus sont toujours identiques pour les mêmes paramètres bien que l'on utilise un système se basant sur une forme d'aléatoire.
+    \item La possibilité de se faire infecter par plusieurs variants en même temps.
+    \item La possibilité de se faire infecter une nouvelle fois après guérison d'un autre variant.
+    \item L'ajout d'une notion de vaccination, les personnes saines pourraient être vaccinées ou non ainsi que les personnes remises.
     \item Ajouter des détails au moment de la création d'un variant (notamment sur le fait de savoir s'il est né avec des paramètres très différents de son parent.).
     \item Enfin, il manque une notion principale, le fait de pouvoir décéder du variant. Dans nos simulations, la population est soit saine, soit en rémission soit infecté mais elle ne peut pas être infecté puis décédée.
 \end{enumerate}
