@@ -19,9 +19,8 @@
 
 \section{Résumé}
 
-Dans ce rapport, on a répondu a la problématique suivante :\\
-Le comportement de l'épidemie de la COVID-19 est-il influencé par la circulation, la mutation et l'interaction de variants ?
-Pour répondre à cette question, on a mis en place un certain nombre d'équation afin de réaliser des simulations. \\Celles-ci nous ont permis d'en conclure que la circulation, la mutation et l'interaction influencent le comportement de l'épidemie.
+Cet article s'intéresse à la problématique suivante : Le comportement de l'épidemie de la COVID-19 est-il influencé par la circulation, la mutation et l'interaction de variants ?
+Pour répondre à cette question, on a mis en place un certain nombre d'équation afin de réaliser des simulations. \\Celles-ci nous ont permis d'en conclure que la circulation, la mutation et la virulence influencent le comportement de l'épidemie.
 
 \section{Introduction}
 
@@ -63,7 +62,7 @@ La simulation discrétisée par le temps est représentée dans le système d'é
 \begin{align}
     \dot{S}(t)= -\alpha S(t)I(t) \\
     \dot{I}(t)= \alpha S(t)I(t)-\beta I(t) \\
-    \dot{R}(t)= \beta I(t)
+    \dot{R}(t)= \beta I(t) + \beta I(t)
 \end{align}
 \noindent
 Cette mise en équation permet de simuler facilement la propagation de la Covid-19 au sein d'une population saine.\\
@@ -111,37 +110,38 @@ Lors de la création de ce modèle, on a définit les règles suivante : \\
 On veut maintenant modéliser les mutations.\\
 Le \% de chance de mutation du variant 1 sur l'intervalle de temps T est défini par :
 \begin{align}
-    mut = I_1(t)*(1-e^{\gamma T})\text{ avec }\gamma > \text{0}
+    m = (1-e^{\gamma T})I_1(t) \text{ avec }\gamma > \text{0}
 \end{align}
 \noindent
 Si une mutation doit être réalisé alors \\
 \noindent
-T est un nombre aléatoire tel que 0 < T < 100 \\
-t est la probabilité que les propriétés d'un variant soient fortement différentes des propriétés du parent.\\
-Si T > t \\
-Alors F(T) =
+X est un nombre aléatoire tel que 0 < T < 100 \\
+x est la probabilité que les propriétés d'un variant soient fortement différentes des propriétés du parent.\\
+Si X > x \\
+Alors F(X) =
 \begin{align}
-    new_\alpha = x, \alpha_{variant} \times 1.2 < x < \alpha_{variant} \times 1.4 \\
-    new_\beta = x, \beta_{variant} \times 0.9 < x < \beta_{variant} \times 1.1
+    n_\alpha = x \text{ avec } 1.2\alpha_{variant} < x < 1.4\alpha_{variant}  \\
+    n_\beta = x \text{ avec } 0.9\beta_{variant}  < x < 1.1\beta_{variant}
 \end{align}
 \noindent
-Sinon F(T) = \\
+Sinon F(X) = \\
 \begin{align}
-    new_\alpha= x, \alpha_{variant} \times 0.1 < x < \alpha_{variant} \times 1.9 \\
-    new_\beta= x, \beta_{variant} \times 0.1 < x < \beta_{variant} \times 1.9
+    n_\alpha= x \text{ avec } 0.1\alpha_{variant} < x < 1.9\alpha_{variant} \\
+    n_\beta= x \text{ avec } 0.1\beta_{variant} < x < 1.9\beta_{variant}
 \end{align}
 
 
 \section{Simulations numériques}
 
 Dans cette partie, on va réaliser plusieurs simulations avec différents paramètres. Ces simulations sont produites avec un outil que l'on a développé et déployé en ligne, disponible à l'adresse suivante : https://modelisation.vercel.app/ \\
+Sur cet outil de modélisation, il est possible de choisir 2 types de représentation, une représentation en ligne et une représentation en pile (stack). Pour les simulations suivantes, nous avons décidé d'utiliser la représentation en ligne. \\
 Les paramètres initiaux sont les suivants : \\
 \begin{enumerate}
     \item Taux de personnes saines = 0,97
     \item Taux de personnes en rémission = 0
     \item Mutabilité du virus = 0,01
-    \item Probabilité de créer un nouveau variant avec des paramètres très éloignées de son parent = 1
-    \item Durée de la simulation en jours = 2000\\
+    \item Probabilité de créer un nouveau variant avec des paramètres très éloignées de son parent = 1\%
+    \item Durée de la simulation en jours = 2000 \\
 \end{enumerate}
 Pour le variant 1 :
 \begin{enumerate}
@@ -182,8 +182,8 @@ On remarque la création de 6 nouveaux variants : \\
     \item Variant 7 : Apparition au jour 1419. Il est issu du variant 4. Il ne survit pas.
     \item Variant 8 : Apparition dans les derniers jours de la modélisation.
 \end{enumerate}
-
-La simulation de référence montre que les
+\noindent
+La simulation de référence montre que l'on a une forte création de variant se basant sur le variant 1. En effet le variant 1 prend complètement le dessus sur le variant 2 alors qu'il possède un taux d'infecté inférieur au début de la simulation. Cela est du au fait que le variant 1 est plus virulent. Ce dernier devient donc le variant à l'origine de tout les autres variants.
 
 \subsection{Influence de la mutabilité du virus}
 
@@ -208,10 +208,8 @@ Pour cette simulation, on a décidé de modifier le paramètre suivant :
     \item Mutabilité du virus = 0,05 pour la figure (b) \\
 \end{enumerate}
 \noindent
-On remarque la création de 2 nouveaux variants. \\
 
-Il y a une très forte domination du variant 1 sur le variant 2 bien que le taux d'infecté soit supérieur pour le variant 2 au début de la simulation. Les taux de contagions sont les mêmes mais il y a une différence dans les taux de virulence. \\
-Il n'y a pas de forte différence entre le variant 3 et 4, ils sont tout les deux issus du variant 1. \\ Ils restent plus fort que le variant 1 parent.
+Pour cette simulation, deux simulations ont été faites afin de mettre en avant la modification du paramètre de mutaibilité. Concernant la simulation de la figure 2.a, on remarque la création de seulement 2 variants et la dominance du variant 1. Tandis que pour la simulation de la figure 2.b, on remarque la création de 33 variants mais aucun variant ne prend jamais le dessus sur les autres. Etant donné que lors de la création d'un nouveau variant, ce dernier 'vole' une grande partie de la population de son parent, et que la mutabilité est élevé, il n'est pas possible pour un variant de prendre le dessus sur tout les autres.
 
 \subsection{Influence de la force de contagion du premier variant}
 
@@ -226,9 +224,8 @@ Pour cette simulation, on a décidé de modifier le paramètre suivant :
     \item Force de contagion du variant 1 = 0,05 \\
 \end{enumerate}
 \noindent
-On remarque la création de 4 nouveaux variants. \\
 
-On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte quasiment toute la population très rapidement et devient le parent ou grand-parent de tout les variants. \\
+On remarque qu'avec un taux de contagion plus élevé, le variant 1 infecte jusqu'à presque 90\% de la population très rapidement et devient, par conséquent, le parent ou grand-parent de tout les variants. Le variant 2 quant à lui n'infecte quasiment aucune de la population et disparait très rapidement. \\
 
 \subsection{Influence de la virulence du premier variant}
 
@@ -243,10 +240,9 @@ Pour cette simulation, on a décidé de modifier le paramètre suivant :
     \item Virulence du variant = 0,0001 \\
 \end{enumerate}
 \noindent
-On remarque la création de 6 nouveaux variants. \\
 
-On remarque qu'avec un taux de virulence plus faible, le variant 1 infecte quasiment toute la population et le taux de rémission reste faible après 2000 jours. \\
-De plus la plupart des variants (Variant 4, 5, 7, 8, 10) sont plus fort que le variant parent à la fin de la simulation. \\
+On remarque qu'avec un taux de virulence plus faible qui entraine une virulence plus forte, le variant 1 infecte quasiment toute la population et le taux de rémission reste faible après 2000 jours. \\ Cependant, en observant la tendance de la courbe du taux de rémission, on se rend compte que si l'on double le temps de la simulation, le taux de rémission arrivera à 1.
+Enfin, on remarque que la plupart des variants (Variant 4, 5, 7, 8, 10) sont plus fort que le variant parent à la fin de la simulation. \\
 
 \subsection{Simulation pour avoir un variant gagnant sur le taux de rémission}
 
@@ -261,7 +257,7 @@ Pour cette simulation, on a décidé de modifier les paramètres suivants :
     \item Mutabilité du virus = 0,0001
     \item Virulence du variant 2 = 0,0002
 \end{enumerate}
-
+\noindent
 Durant cette simulation, nous avons modifié plusieurs paramètres afin d'arriver à un résultat voulu : avoir un variant avec un taux d'infectés supérieur au taux de rémission. On a donc modifié la mutabilité du virus afin d'éviter la création de variant et d'entraîner la chute des variants de base. De plus, on a altéré la virulence du variant 2 afin qu'il soit plus fort. On remarque donc qu'à la fin de la simulation, on a le résultat voulu. Cependant, on peut être sûr que si la simulation avait duré plus longtemps, le taux de rémission serait devenu majoritaire.
 
 
@@ -269,14 +265,12 @@ Durant cette simulation, nous avons modifié plusieurs paramètres afin d'arrive
 
 \begin{figure}[h]
     \includegraphics[width=\linewidth]{images/Simulation6.png}
-    \caption{Simulation avec les variants initiaux}
+    \caption{Simulation avec les variants initiaux (Mutabilité du virus = 0,0001)}
     \label{fig:simulation6}
 \end{figure}
 
-Dans cette partie, nous allons comparer nos différentes simulations à la simulation de la figure 6 qui représente notre modèle sans création de nouveaux variants.
-
-On peut noter qu'étant donné que la population ne baisse pas (le décès n'est pas modélisé), elle ne peut donc que se remettre. Ainsi, avec une durée 'infinie', on obtient un taux de rémission toujours revenu à la totalité de la population. \\
-
+\noindent
+Dans cette partie, nous allons comparer nos différentes simulations à la simulation de la figure 6 qui représente notre modèle sans création de nouveaux variants. Tout d'abord, sur la simulation 6, on peut noter que le variant 1 prend le dessus grâce à sa plus forte virulence. C'est un effet que l'on peut confirmer grâce à la simulation 4. De plus, pour obtenir une simulation avec peu ou pas de nouveaux variants, il faut diminuer la mutabilité du virus, avec la simulation 2, on a pu confirmer cette affirmation. Ensuite, on remarque que le variant 1 à un plus faible force de contagion que le variant 2 mais que pourtant, il prend rapidement le dessus. On a pu observer cette effet de la contagion dans la simulation 3. Certes, le variant 1 infecte une grande partie de la population rapidement, mais il ne reste que très peu de temps dominant. La contagion n'est donc pas un critère très important à moins d'être combiné à d'autres paramètres. Et enfin, on remarque que la virulence du variant est un critère très important, en effet, la simulation 5 et 6 ont un taux de mutabilité égaux, cependant pour la simulation 6 aucun variant ne domine à la fin de simulation tandis que pour la simulation 5, le variant 2 domine car il a une virulence plus forte, même si étant donné que la population ne baisse pas (le décès n'est pas modélisé), cette dernière ne peut donc que se remettre. Ainsi, avec une durée 'infinie', on obtient un taux de rémission toujours revenu à la totalité de la population. \\
 
 \section{Conclusion}
 
