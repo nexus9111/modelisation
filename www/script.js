@@ -78,7 +78,7 @@ let chartMode = 'line';
 if (chartMode == 'line') {
   document.getElementById("lineButton").classList.add("selected");
 } else {
-  document.getElementById("lineButton").classList.add("selected");
+  document.getElementById("stackButton").classList.add("selected");
 }
 
 document.getElementById("lineButton").addEventListener("click", function() {
