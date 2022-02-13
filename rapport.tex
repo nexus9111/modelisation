@@ -62,7 +62,7 @@ La simulation discrétisée par le temps est représentée dans le système d'é
 \begin{align}
     \dot{S}(t)= -\alpha S(t)I(t) \\
     \dot{I}(t)= \alpha S(t)I(t)-\beta I(t) \\
-    \dot{R}(t)= \beta I(t) + \beta I(t)
+    \dot{R}(t)= \beta I(t)
 \end{align}
 \noindent
 Cette mise en équation permet de simuler facilement la propagation de la Covid-19 au sein d'une population saine.\\
@@ -115,19 +115,19 @@ Le \% de chance de mutation du variant 1 sur l'intervalle de temps T est défini
 \noindent
 Si une mutation doit être réalisé alors \\
 \noindent
-X est un nombre aléatoire tel que 0 < T < 100 \\
+X est un nombre aléatoire tel que 0 < X < 100 \\
 x est la probabilité que les propriétés d'un variant soient fortement différentes des propriétés du parent.\\
 Si X > x \\
 Alors F(X) =
 \begin{align}
-    n_\alpha = x \text{ avec } 1.2\alpha_{variant} < x < 1.4\alpha_{variant}  \\
-    n_\beta = x \text{ avec } 0.9\beta_{variant}  < x < 1.1\beta_{variant}
+    n_\alpha \in \text{ ]}1.2\alpha_{variant}, 1.4\alpha_{variant}\text{[}  \\
+    n_\beta \in \text{ ]}0.9\beta_{variant}, 1.1\beta_{variant}\text{[}
 \end{align}
 \noindent
 Sinon F(X) = \\
 \begin{align}
-    n_\alpha= x \text{ avec } 0.1\alpha_{variant} < x < 1.9\alpha_{variant} \\
-    n_\beta= x \text{ avec } 0.1\beta_{variant} < x < 1.9\beta_{variant}
+    n_\alpha \in \text{ ]}0.1\alpha_{variant}, 1.9\alpha_{variant}\text{[} \\
+    n_\beta \in \text{ ]}0.1\beta_{variant}, 1.9\beta_{variant}\text{[}
 \end{align}
 
 
